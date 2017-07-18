@@ -48,15 +48,67 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EF\NetworkUsers.cs">
+      <DependentUpon>SocialNetworkContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Posts.cs">
+      <DependentUpon>SocialNetworkContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\SocialNetworkContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SocialNetworkContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\SocialNetworkContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SocialNetworkContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\SocialNetworkContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SocialNetworkContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="EF\UserPhotos.cs">
+      <DependentUpon>SocialNetworkContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Implementation\EFUnitoOfWork.cs" />
+    <Compile Include="Implementation\NetworkUsersRepository.cs" />
+    <Compile Include="Implementation\PostsRepository.cs" />
+    <Compile Include="Implementation\UserPhotosRepository.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\IUnitofWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="EF\SocialNetworkContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SocialNetworkContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="EF\SocialNetworkContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SocialNetworkContext.edmx</DependentUpon>
+      <LastGenOutput>SocialNetworkContext.Context.cs</LastGenOutput>
+    </None>
+    <None Include="EF\SocialNetworkContext.edmx.diagram">
+      <DependentUpon>SocialNetworkContext.edmx</DependentUpon>
+    </None>
+    <None Include="EF\SocialNetworkContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SocialNetworkContext.edmx</DependentUpon>
+      <LastGenOutput>SocialNetworkContext.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
