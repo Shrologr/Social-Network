@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Social_Network_Database.DAL.EF.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="NetworkUsers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Birthday" Type="date" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Show_birthday" Type="bit" Nullable="false" />
+          <Property Name="Mail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="URL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Photo_ID" Type="int" Nullable="false" />
+          <Property Name="User_Password" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Posts">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="Poster_ID" Type="int" Nullable="false" />
+          <Property Name="Text" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Image" Type="image" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserLikes">
+          <Key>
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="Post_ID" />
+          </Key>
+          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="Post_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserPhotos">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image" Type="image" Nullable="false" />
+          <Property Name="User_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_User_Photo_Network_User">
+          <End Role="NetworkUsers" Type="Self.NetworkUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserPhotos" Type="Self.UserPhotos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NetworkUsers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserPhotos">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLike_Network_User">
+          <End Role="NetworkUsers" Type="Self.NetworkUsers" Multiplicity="1" />
+          <End Role="UserLikes" Type="Self.UserLikes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NetworkUsers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserLikes">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLike_Post">
+          <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
+          <End Role="UserLikes" Type="Self.UserLikes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserLikes">
+              <PropertyRef Name="Post_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Social_Network_DatabaseDALEFStoreContainer">
+          <EntitySet Name="NetworkUsers" EntityType="Self.NetworkUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLikes" EntityType="Self.UserLikes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPhotos" EntityType="Self.UserPhotos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_User_Photo_Network_User" Association="Self.FK_User_Photo_Network_User">
+            <End Role="NetworkUsers" EntitySet="NetworkUsers" />
+            <End Role="UserPhotos" EntitySet="UserPhotos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLike_Network_User" Association="Self.FK_UserLike_Network_User">
+            <End Role="NetworkUsers" EntitySet="NetworkUsers" />
+            <End Role="UserLikes" EntitySet="UserLikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLike_Post" Association="Self.FK_UserLike_Post">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="UserLikes" EntitySet="UserLikes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Social_Network_Database.DAL.EF" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="NetworkUsers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Gender" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Show_birthday" Type="Boolean" Nullable="false" />
+          <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="URL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Photo_ID" Type="Int32" Nullable="false" />
+          <Property Name="User_Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="UserPhotos" Relationship="Self.FK_User_Photo_Network_User" FromRole="NetworkUsers" ToRole="UserPhotos" />
+          <NavigationProperty Name="Posts" Relationship="Self.UserLikes" FromRole="NetworkUsers" ToRole="Posts" />
+        </EntityType>
+        <EntityType Name="Posts">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="Poster_ID" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="NetworkUsers" Relationship="Self.UserLikes" FromRole="Posts" ToRole="NetworkUsers" />
+        </EntityType>
+        <EntityType Name="UserPhotos">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NetworkUsers" Relationship="Self.FK_User_Photo_Network_User" FromRole="UserPhotos" ToRole="NetworkUsers" />
+        </EntityType>
+        <Association Name="FK_User_Photo_Network_User">
+          <End Role="NetworkUsers" Type="Self.NetworkUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserPhotos" Type="Self.UserPhotos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NetworkUsers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserPhotos">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserLikes">
+          <End Role="NetworkUsers" Type="Self.NetworkUsers" Multiplicity="*" />
+          <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="SocialNetworkDatabaseContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="NetworkUsers" EntityType="Self.NetworkUsers" />
+          <EntitySet Name="Posts" EntityType="Self.Posts" />
+          <EntitySet Name="UserPhotos" EntityType="Self.UserPhotos" />
+          <AssociationSet Name="FK_User_Photo_Network_User" Association="Self.FK_User_Photo_Network_User">
+            <End Role="NetworkUsers" EntitySet="NetworkUsers" />
+            <End Role="UserPhotos" EntitySet="UserPhotos" />
+          </AssociationSet>
+          <AssociationSet Name="UserLikes" Association="Self.UserLikes">
+            <End Role="NetworkUsers" EntitySet="NetworkUsers" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Social_Network_DatabaseDALEFStoreContainer" CdmEntityContainer="SocialNetworkDatabaseContext">
+          <EntitySetMapping Name="NetworkUsers">
+            <EntityTypeMapping TypeName="Social_Network_Database.DAL.EF.NetworkUsers">
+              <MappingFragment StoreEntitySet="NetworkUsers">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Show_birthday" ColumnName="Show_birthday" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Photo_ID" ColumnName="Photo_ID" />
+                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="Social_Network_Database.DAL.EF.Posts">
+              <MappingFragment StoreEntitySet="Posts">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Poster_ID" ColumnName="Poster_ID" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserPhotos">
+            <EntityTypeMapping TypeName="Social_Network_Database.DAL.EF.UserPhotos">
+              <MappingFragment StoreEntitySet="UserPhotos">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UserLikes" TypeName="Social_Network_Database.DAL.EF.UserLikes" StoreEntitySet="UserLikes">
+            <EndProperty Name="NetworkUsers">
+              <ScalarProperty Name="ID" ColumnName="User_ID" />
+            </EndProperty>
+            <EndProperty Name="Posts">
+              <ScalarProperty Name="ID" ColumnName="Post_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,10 @@
+C:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.DAL\bin\Debug\Social_Network.DAL.dll.config
+C:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.DAL\bin\Debug\Social_Network.DAL.dll
+C:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.DAL\bin\Debug\Social_Network.DAL.pdb
+C:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.DAL\bin\Debug\EntityFramework.dll
+C:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.DAL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.DAL\bin\Debug\EntityFramework.xml
+C:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.DAL\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.DAL\obj\Debug\Social_Network.DAL.csprojResolveAssemblyReference.cache
+C:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.DAL\obj\Debug\Social_Network.DAL.dll
+C:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.DAL\obj\Debug\Social_Network.DAL.pdb
