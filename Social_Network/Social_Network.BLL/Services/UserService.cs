@@ -14,9 +14,9 @@ namespace Social_Network.BLL.Services
 {
     public class UserService:IUserService
     {
-        private IUnitofWork Database { get; set; }
+        private IUnitOfWork Database { get; set; }
 
-        public UserService(IUnitofWork uow)
+        public UserService(IUnitOfWork uow)
         {
             Database = uow;
         }

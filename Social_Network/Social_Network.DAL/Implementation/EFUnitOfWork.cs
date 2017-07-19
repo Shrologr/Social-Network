@@ -9,7 +9,7 @@ using Social_Network.DAL.Interfaces;
 
 namespace Social_Network.DAL.Implementation
 {
-    public class EFUnitOfWork:IUnitofWork
+    public class EFUnitOfWork:IUnitOfWork
     {
         private SocialNetworkDatabaseContext db;
         private NetworkUsersRepository networkUsersRepository;

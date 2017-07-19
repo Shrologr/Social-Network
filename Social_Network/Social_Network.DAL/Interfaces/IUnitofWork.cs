@@ -7,7 +7,7 @@ using Social_Network.DAL.EF;
 
 namespace Social_Network.DAL.Interfaces
 {
-    public interface IUnitofWork:IDisposable
+    public interface IUnitOfWork:IDisposable
     {
         IRepository<NetworkUsers> NetworkUsers { get; }
         IRepository<Posts> Posts { get; }
