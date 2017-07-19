@@ -9,13 +9,13 @@ using Social_Network.DAL.Interfaces;
 
 namespace Social_Network.DAL.Implementation
 {
-    public class EFUnitoOfWork:IUnitofWork
+    public class EFUnitOfWork:IUnitofWork
     {
         private SocialNetworkDatabaseContext db;
         private NetworkUsersRepository networkUsersRepository;
         private PostsRepository postsRepository;
         private UserPhotosRepository userPhotosRepository;
-        public EFUnitoOfWork(string connectionString)
+        public EFUnitOfWork(string connectionString)
         {
             db = new SocialNetworkDatabaseContext(connectionString);
         }

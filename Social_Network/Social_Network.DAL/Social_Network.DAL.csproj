@@ -72,7 +72,7 @@
     <Compile Include="EF\UserPhotos.cs">
       <DependentUpon>SocialNetworkContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Implementation\EFUnitoOfWork.cs" />
+    <Compile Include="Implementation\EFUnitOfWork.cs" />
     <Compile Include="Implementation\NetworkUsersRepository.cs" />
     <Compile Include="Implementation\PostsRepository.cs" />
     <Compile Include="Implementation\UserPhotosRepository.cs" />
