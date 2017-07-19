@@ -77,7 +77,7 @@
     <Compile Include="Implementation\PostsRepository.cs" />
     <Compile Include="Implementation\UserPhotosRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Interfaces\IUnitofWork.cs" />
+    <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
