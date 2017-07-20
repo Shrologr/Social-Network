@@ -11,6 +11,7 @@ namespace Social_Network.BLL.Interfaces
     {
         NetworkUsersDTO GetUser(string email, string password);
         NetworkUsersDTO GetUser(int? id);
+        void UpdateUser(NetworkUsersDTO user);
         IEnumerable<NetworkUsersDTO> GetAllUsers();
         void CreateUser(NetworkUsersDTO user);
         void DeleteUser(int? id);

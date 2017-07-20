@@ -52,12 +52,22 @@ namespace Social_Network.BLL.Services
 
         public void CreatePhoto(UserPhotosDTO photo)
         {
-            throw new NotImplementedException();
+            Mapper.Initialize(cfg => cfg.CreateMap<UserPhotosDTO, UserPhotos>());
+            var newPhoto = Mapper.Map<UserPhotosDTO, UserPhotos>(photo);
+            Database.UserPhotos.Create(newPhoto);
         }
 
-        public void DeletePhoto(UserPhotosDTO photo)
+        public void DeletePhoto(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+            {
+                throw new ValidationException("Id is null", "");
+            }
+            if (Database.UserPhotos.Get(id.Value) == null)
+            {
+                throw new ValidationException("Such photo does not exist", "");
+            }
+            Database.UserPhotos.Delete(id.Value);
         }
 
         public void Dispose()

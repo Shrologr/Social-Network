@@ -12,7 +12,7 @@ using AutoMapper;
 
 namespace Social_Network.BLL.Services
 {
-    public class UserService:IUserService
+    public class UserService: IUserService
     {
         private IUnitOfWork Database { get; set; }
 
@@ -65,6 +65,7 @@ namespace Social_Network.BLL.Services
                 throw new ValidationException("Such user already exists", ""); 
             }
             Database.NetworkUsers.Create(newUser);
+            Database.Save();
         }
 
         public void DeleteUser(int? id)
@@ -78,11 +79,22 @@ namespace Social_Network.BLL.Services
                 throw new ValidationException("Such user does not exist", "");                 
             }
             Database.NetworkUsers.Delete(id.Value);
+            Database.Save();
         }
+        public void UpdateUser(NetworkUsersDTO user)
+        {
+            Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsersDTO, NetworkUsers>());
+            var userForUpdate = Mapper.Map<NetworkUsersDTO, NetworkUsers>(user);
+            Database.NetworkUsers.Update(userForUpdate);
 
+            Database.Save();
+        }
         public void Dispose()
         {
             Database.Dispose();
         }
+
+
+        
     }
 }
