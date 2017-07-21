@@ -27,5 +27,7 @@ namespace Social_Network.DAL.EF
         public byte[] Image { get; set; }
     
         public virtual ICollection<NetworkUsers> NetworkUsers { get; set; }
+        public virtual NetworkUsers NetworkUsersPosterID { get; set; }
+        public virtual NetworkUsers NetworkUsersUserID { get; set; }
     }
 }

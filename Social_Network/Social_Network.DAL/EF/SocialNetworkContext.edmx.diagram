@@ -10,6 +10,8 @@
         <EntityTypeShape EntityType="Social_Network_Database.DAL.EF.UserPhotos" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
         <AssociationConnector Association="Social_Network_Database.DAL.EF.FK_User_Photo_Network_User" ManuallyRouted="false" />
         <AssociationConnector Association="Social_Network_Database.DAL.EF.UserLikes" ManuallyRouted="false" />
+        <AssociationConnector Association="Social_Network_Database.DAL.EF.FK_Posts_NetworkUsers_PosterID" />
+        <AssociationConnector Association="Social_Network_Database.DAL.EF.FK_Posts_NetworkUsers_UserID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

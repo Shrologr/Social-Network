@@ -19,7 +19,6 @@ namespace Social_Network.DAL.EF
             : base(connectionString)
         {
         }
-
     
         public virtual DbSet<NetworkUsers> NetworkUsers { get; set; }
         public virtual DbSet<Posts> Posts { get; set; }

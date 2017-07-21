@@ -25,7 +25,7 @@ namespace Social_Network.BLL.Services
             var users = Database.NetworkUsers.Find(s => s.Mail == email && s.User_Password == password);
             if (users.Count() == 0)
             {
-                throw new ValidationException("Wrong email or password","");
+                return null;
             }
             if (users.Count() > 1)
             {
@@ -86,15 +86,11 @@ namespace Social_Network.BLL.Services
             Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsersDTO, NetworkUsers>());
             var userForUpdate = Mapper.Map<NetworkUsersDTO, NetworkUsers>(user);
             Database.NetworkUsers.Update(userForUpdate);
-
             Database.Save();
         }
         public void Dispose()
         {
             Database.Dispose();
         }
-
-
-        
     }
 }

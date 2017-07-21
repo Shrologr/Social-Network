@@ -12,7 +12,7 @@ using AutoMapper;
 
 namespace Social_Network.BLL.Services
 {
-    public class UserPhotoService:IUserPhotoService
+    public class UserPhotoService: IUserPhotoService
     {
         private IUnitOfWork Database;
         public UserPhotoService(IUnitOfWork uow)
@@ -55,6 +55,7 @@ namespace Social_Network.BLL.Services
             Mapper.Initialize(cfg => cfg.CreateMap<UserPhotosDTO, UserPhotos>());
             var newPhoto = Mapper.Map<UserPhotosDTO, UserPhotos>(photo);
             Database.UserPhotos.Create(newPhoto);
+            Database.Save();
         }
 
         public void DeletePhoto(int? id)
@@ -68,6 +69,7 @@ namespace Social_Network.BLL.Services
                 throw new ValidationException("Such photo does not exist", "");
             }
             Database.UserPhotos.Delete(id.Value);
+            Database.Save();
         }
 
         public void Dispose()

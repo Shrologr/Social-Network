@@ -18,6 +18,8 @@ namespace Social_Network.DAL.EF
         {
             this.UserPhotos = new HashSet<UserPhotos>();
             this.Posts = new HashSet<Posts>();
+            this.PostsPosterID = new HashSet<Posts>();
+            this.PostsUserID = new HashSet<Posts>();
         }
     
         public int ID { get; set; }
@@ -33,5 +35,7 @@ namespace Social_Network.DAL.EF
     
         public virtual ICollection<UserPhotos> UserPhotos { get; set; }
         public virtual ICollection<Posts> Posts { get; set; }
+        public virtual ICollection<Posts> PostsPosterID { get; set; }
+        public virtual ICollection<Posts> PostsUserID { get; set; }
     }
 }

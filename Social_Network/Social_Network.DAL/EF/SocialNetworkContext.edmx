@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Social_Network_Database.DAL.EF.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Social_Network_Database.DAL.EF.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="NetworkUsers">
           <Key>
             <PropertyRef Name="ID" />
@@ -47,6 +47,30 @@
           <Property Name="Image" Type="image" Nullable="false" />
           <Property Name="User_ID" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Posts_NetworkUsers_PosterID">
+          <End Role="NetworkUsers" Type="Self.NetworkUsers" Multiplicity="1" />
+          <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NetworkUsers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="Poster_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Posts_NetworkUsers_UserID">
+          <End Role="NetworkUsers" Type="Self.NetworkUsers" Multiplicity="1" />
+          <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NetworkUsers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_Photo_Network_User">
           <End Role="NetworkUsers" Type="Self.NetworkUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -62,7 +86,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserLike_Network_User">
-          <End Role="NetworkUsers" Type="Self.NetworkUsers" Multiplicity="1" />
+          <End Role="NetworkUsers" Type="Self.NetworkUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="UserLikes" Type="Self.UserLikes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NetworkUsers">
@@ -74,7 +100,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserLike_Post">
-          <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
+          <End Role="Posts" Type="Self.Posts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="UserLikes" Type="Self.UserLikes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Posts">
@@ -90,6 +118,14 @@
           <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLikes" EntityType="Self.UserLikes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPhotos" EntityType="Self.UserPhotos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Posts_NetworkUsers_PosterID" Association="Self.FK_Posts_NetworkUsers_PosterID">
+            <End Role="NetworkUsers" EntitySet="NetworkUsers" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Posts_NetworkUsers_UserID" Association="Self.FK_Posts_NetworkUsers_UserID">
+            <End Role="NetworkUsers" EntitySet="NetworkUsers" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_Photo_Network_User" Association="Self.FK_User_Photo_Network_User">
             <End Role="NetworkUsers" EntitySet="NetworkUsers" />
             <End Role="UserPhotos" EntitySet="UserPhotos" />
@@ -103,8 +139,7 @@
             <End Role="UserLikes" EntitySet="UserLikes" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Social_Network_Database.DAL.EF" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -124,6 +159,8 @@
           <Property Name="User_Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="UserPhotos" Relationship="Self.FK_User_Photo_Network_User" FromRole="NetworkUsers" ToRole="UserPhotos" />
           <NavigationProperty Name="Posts" Relationship="Self.UserLikes" FromRole="NetworkUsers" ToRole="Posts" />
+          <NavigationProperty Name="PostsPosterID" Relationship="Social_Network_Database.DAL.EF.FK_Posts_NetworkUsers_PosterID" FromRole="NetworkUsers" ToRole="Posts" />
+          <NavigationProperty Name="PostsUserID" Relationship="Social_Network_Database.DAL.EF.FK_Posts_NetworkUsers_UserID" FromRole="NetworkUsers" ToRole="Posts" />
         </EntityType>
         <EntityType Name="Posts">
           <Key>
@@ -136,6 +173,8 @@
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <NavigationProperty Name="NetworkUsers" Relationship="Self.UserLikes" FromRole="Posts" ToRole="NetworkUsers" />
+          <NavigationProperty Name="NetworkUsersPosterID" Relationship="Social_Network_Database.DAL.EF.FK_Posts_NetworkUsers_PosterID" FromRole="Posts" ToRole="NetworkUsers" />
+          <NavigationProperty Name="NetworkUsersUserID" Relationship="Social_Network_Database.DAL.EF.FK_Posts_NetworkUsers_UserID" FromRole="Posts" ToRole="NetworkUsers" />
         </EntityType>
         <EntityType Name="UserPhotos">
           <Key>
@@ -176,7 +215,39 @@
             <End Role="NetworkUsers" EntitySet="NetworkUsers" />
             <End Role="Posts" EntitySet="Posts" />
           </AssociationSet>
+          <AssociationSet Name="FK_Posts_NetworkUsers_PosterID" Association="Social_Network_Database.DAL.EF.FK_Posts_NetworkUsers_PosterID">
+            <End Role="NetworkUsers" EntitySet="NetworkUsers" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Posts_NetworkUsers_UserID" Association="Social_Network_Database.DAL.EF.FK_Posts_NetworkUsers_UserID">
+            <End Role="NetworkUsers" EntitySet="NetworkUsers" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Posts_NetworkUsers_PosterID">
+          <End Type="Social_Network_Database.DAL.EF.NetworkUsers" Role="NetworkUsers" Multiplicity="1" />
+          <End Type="Social_Network_Database.DAL.EF.Posts" Role="Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NetworkUsers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="Poster_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Posts_NetworkUsers_UserID">
+          <End Type="Social_Network_Database.DAL.EF.NetworkUsers" Role="NetworkUsers" Multiplicity="1" />
+          <End Type="Social_Network_Database.DAL.EF.Posts" Role="Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NetworkUsers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
