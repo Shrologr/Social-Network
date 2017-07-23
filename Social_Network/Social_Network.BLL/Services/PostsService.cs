@@ -96,12 +96,12 @@ namespace Social_Network.BLL.Services
             if (post.NetworkUsers.Contains(user))
             {
                 post.NetworkUsers.Remove(user);
-                //user.Posts.Remove(post);
+                user.Posts.Remove(post);
             }
             else 
             {
                 post.NetworkUsers.Add(user);
-                //user.Posts.Add(post); 
+                user.Posts.Add(post); 
             }
             Database.Save();
         }
@@ -116,6 +116,17 @@ namespace Social_Network.BLL.Services
             {
                 throw new ValidationException("Such post does not exist", "");
             }
+            var users = Database.Posts.Get(id.Value).NetworkUsers;
+            users.ToList().ForEach(
+                s => 
+                {
+                    var item = s.Posts.FirstOrDefault(d => d.ID == id.Value);
+                    if (item != null)
+                    {
+                        s.Posts.Remove(item);
+                    }
+                }
+                );
             Database.Posts.Delete(id.Value);
             Database.Save();
         }

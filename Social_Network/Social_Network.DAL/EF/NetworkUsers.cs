@@ -16,7 +16,6 @@ namespace Social_Network.DAL.EF
     {
         public NetworkUsers()
         {
-            this.UserPhotos = new HashSet<UserPhotos>();
             this.Posts = new HashSet<Posts>();
             this.PostsPosterID = new HashSet<Posts>();
             this.PostsUserID = new HashSet<Posts>();
@@ -30,12 +29,12 @@ namespace Social_Network.DAL.EF
         public bool Show_birthday { get; set; }
         public string Mail { get; set; }
         public string URL { get; set; }
-        public int Photo_ID { get; set; }
+        public Nullable<int> Photo_ID { get; set; }
         public string User_Password { get; set; }
     
-        public virtual ICollection<UserPhotos> UserPhotos { get; set; }
         public virtual ICollection<Posts> Posts { get; set; }
         public virtual ICollection<Posts> PostsPosterID { get; set; }
         public virtual ICollection<Posts> PostsUserID { get; set; }
+        public virtual UserPhotos UserPhotos { get; set; }
     }
 }

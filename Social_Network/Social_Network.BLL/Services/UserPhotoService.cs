@@ -24,17 +24,6 @@ namespace Social_Network.BLL.Services
             Mapper.Initialize(cfg => cfg.CreateMap<UserPhotos, UserPhotosDTO>());
             return Mapper.Map<IEnumerable<UserPhotos>, IEnumerable<UserPhotosDTO>>(Database.UserPhotos.GetAll());
         }
-
-        public IEnumerable<UserPhotosDTO> GetUserPhotos(int? id)
-        {
-            if (id == null)
-            {
-                throw new ValidationException("Id is null", "");
-            }
-            Mapper.Initialize(cfg => cfg.CreateMap<UserPhotos, UserPhotosDTO>());
-            return Mapper.Map<IEnumerable<UserPhotos>, IEnumerable<UserPhotosDTO>>(Database.UserPhotos.Find(s=>s.User_ID == id.Value));
-        }
-
         public UserPhotosDTO GetPhoto(int? id)
         {
             if (id == null)
@@ -67,6 +56,12 @@ namespace Social_Network.BLL.Services
             if (Database.UserPhotos.Get(id.Value) == null)
             {
                 throw new ValidationException("Such photo does not exist", "");
+            }
+            var somePhoto = Database.UserPhotos.Get(id.Value);
+            var user = Database.NetworkUsers.Find(s=>s.Photo_ID == id.Value).FirstOrDefault();
+            if (user != null)
+            {
+                user.Photo_ID = null;
             }
             Database.UserPhotos.Delete(id.Value);
             Database.Save();

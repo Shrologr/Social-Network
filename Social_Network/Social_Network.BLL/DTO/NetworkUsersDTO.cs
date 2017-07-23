@@ -16,7 +16,7 @@ namespace Social_Network.BLL.DTO
         public bool Show_birthday { get; set; }
         public string Mail { get; set; }
         public string URL { get; set; }
-        public int Photo_ID { get; set; }
+        public int? Photo_ID { get; set; }
         public string User_Password { get; set; }
     }
 }

@@ -10,6 +10,5 @@ namespace Social_Network.BLL.DTO
     {
         public int ID { get; set; }
         public byte[] Image { get; set; }
-        public int User_ID { get; set; }
     }
 }

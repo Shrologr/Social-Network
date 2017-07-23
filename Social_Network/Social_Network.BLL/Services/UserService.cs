@@ -15,10 +15,13 @@ namespace Social_Network.BLL.Services
     public class UserService: IUserService
     {
         private IUnitOfWork Database { get; set; }
-
-        public UserService(IUnitOfWork uow)
+        private IPostsService PostService { get; set; }
+        private IUserPhotoService UserPhotoService { get; set; }
+        public UserService(IUnitOfWork uow, IPostsService postService, IUserPhotoService userPhotoService)
         {
             Database = uow;
+            PostService = postService;
+            UserPhotoService = userPhotoService;
         }
         public NetworkUsersDTO GetUser(string email, string password)
         {
@@ -78,6 +81,9 @@ namespace Social_Network.BLL.Services
             {
                 throw new ValidationException("Such user does not exist", "");                 
             }
+            Database.NetworkUsers.Get(id.Value).Posts.ToList().ForEach(a => PostService.ChangePostLike(id, a.ID));
+            Database.NetworkUsers.Get(id.Value).PostsPosterID.ToList().ForEach(a => PostService.DeletePost(a.ID));
+            Database.NetworkUsers.Get(id.Value).PostsUserID.ToList().ForEach(a => PostService.DeletePost(a.ID));
             Database.NetworkUsers.Delete(id.Value);
             Database.Save();
         }
@@ -91,6 +97,8 @@ namespace Social_Network.BLL.Services
         public void Dispose()
         {
             Database.Dispose();
+            PostService.Dispose();
+            UserPhotoService.Dispose();
         }
     }
 }

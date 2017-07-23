@@ -14,10 +14,14 @@ namespace Social_Network.DAL.EF
     
     public partial class UserPhotos
     {
+        public UserPhotos()
+        {
+            this.NetworkUsers = new HashSet<NetworkUsers>();
+        }
+    
         public int ID { get; set; }
         public byte[] Image { get; set; }
-        public int User_ID { get; set; }
     
-        public virtual NetworkUsers NetworkUsers { get; set; }
+        public virtual ICollection<NetworkUsers> NetworkUsers { get; set; }
     }
 }

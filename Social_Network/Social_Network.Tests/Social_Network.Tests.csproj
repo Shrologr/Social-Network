@@ -61,9 +61,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="BusinessLayerUserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BusinessLayerPhotoTest.cs" />
+    <Compile Include="BusinessLayerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Social_Network.BLL\Social_Network.BLL.csproj">
