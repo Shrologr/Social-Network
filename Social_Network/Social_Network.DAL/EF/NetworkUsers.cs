@@ -31,6 +31,7 @@ namespace Social_Network.DAL.EF
         public string URL { get; set; }
         public Nullable<int> Photo_ID { get; set; }
         public string User_Password { get; set; }
+        public System.Guid UserGUID { get; set; }
     
         public virtual ICollection<Posts> Posts { get; set; }
         public virtual ICollection<Posts> PostsPosterID { get; set; }

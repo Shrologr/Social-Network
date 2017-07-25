@@ -8,6 +8,7 @@ namespace Social_Network.WEB.Models
 {
     public class RegistrarionViewModel
     {
+        public int ID { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

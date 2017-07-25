@@ -10,6 +10,7 @@ namespace Social_Network.BLL.Interfaces
     public interface IUserService
     {
         NetworkUsersDTO GetUser(string email, string password);
+        NetworkUsersDTO GetUser(Guid guid);
         NetworkUsersDTO GetUser(int? id);
         void UpdateUser(NetworkUsersDTO user);
         IEnumerable<NetworkUsersDTO> GetAllUsers();

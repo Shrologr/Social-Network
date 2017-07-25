@@ -20,6 +20,11 @@ namespace Social_Network.DAL.EF
         {
         }
     
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
+    
         public virtual DbSet<NetworkUsers> NetworkUsers { get; set; }
         public virtual DbSet<Posts> Posts { get; set; }
         public virtual DbSet<UserPhotos> UserPhotos { get; set; }

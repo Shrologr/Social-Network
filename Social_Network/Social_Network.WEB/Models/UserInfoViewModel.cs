@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Social_Network.BLL.DTO
+namespace Social_Network.WEB.Models
 {
-    public class NetworkUsersDTO
-    {    
-        public int ID { get; set; }
+    public class UserInfoViewModel
+    {
         public string Name { get; set; }
         public string Surname { get; set; }
         public System.DateTime Birthday { get; set; }
@@ -17,7 +15,5 @@ namespace Social_Network.BLL.DTO
         public string Mail { get; set; }
         public string URL { get; set; }
         public int? Photo_ID { get; set; }
-        public string User_Password { get; set; }
-        public System.Guid UserGUID { get; set; }
     }
 }

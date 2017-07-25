@@ -19,6 +19,7 @@
           <Property Name="URL" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Photo_ID" Type="int" />
           <Property Name="User_Password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserGUID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Posts">
           <Key>
@@ -154,6 +155,7 @@
           <NavigationProperty Name="PostsPosterID" Relationship="Social_Network_Database.DAL.EF.FK_Posts_NetworkUsers_PosterID" FromRole="NetworkUsers" ToRole="Posts" />
           <NavigationProperty Name="PostsUserID" Relationship="Social_Network_Database.DAL.EF.FK_Posts_NetworkUsers_UserID" FromRole="NetworkUsers" ToRole="Posts" />
           <NavigationProperty Name="UserPhotos" Relationship="Social_Network_Database.DAL.EF.FK_NetworkUsers_UserPhotos_PhotoID" FromRole="NetworkUsers" ToRole="UserPhotos" />
+          <Property Name="UserGUID" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="Posts">
           <Key>
@@ -247,6 +249,7 @@
           <EntitySetMapping Name="NetworkUsers">
             <EntityTypeMapping TypeName="Social_Network_Database.DAL.EF.NetworkUsers">
               <MappingFragment StoreEntitySet="NetworkUsers">
+                <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />

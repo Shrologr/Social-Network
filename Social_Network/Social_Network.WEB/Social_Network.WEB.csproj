@@ -141,11 +141,14 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserLoginController.cs" />
+    <Compile Include="Filters\NetworkAuthentication.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegistrarionViewModel.cs" />
+    <Compile Include="Models\UserInfoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\NinjectDependencyResolver.cs" />
   </ItemGroup>
@@ -154,8 +157,9 @@
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
-    <Content Include="Views\User\Login.cshtml" />
-    <Content Include="Views\User\Register.cshtml" />
+    <Content Include="Views\UserLogin\Login.cshtml" />
+    <Content Include="Views\UserLogin\Register.cshtml" />
+    <Content Include="Views\User\MainPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

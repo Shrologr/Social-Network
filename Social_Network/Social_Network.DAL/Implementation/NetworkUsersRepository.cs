@@ -38,6 +38,9 @@ namespace Social_Network.DAL.Implementation
 
         public void Update(NetworkUsers item)
         {
+            var oldUser = Get(item.ID);
+            db.Entry(oldUser).State = EntityState.Detached;
+            db.NetworkUsers.Attach(item);
             db.Entry(item).State = EntityState.Modified;
         }
 

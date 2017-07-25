@@ -100,5 +100,21 @@ namespace Social_Network.BLL.Services
             PostService.Dispose();
             UserPhotoService.Dispose();
         }
+
+
+        public NetworkUsersDTO GetUser(Guid guid)
+        {
+            var users = Database.NetworkUsers.Find(s => s.UserGUID == guid);
+            if (users.Count() == 0)
+            {
+                return null;
+            }
+            if (users.Count() > 1)
+            {
+                throw new ValidationException("Error. To many users...", "");
+            }
+            Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsers, NetworkUsersDTO>());
+            return Mapper.Map<IEnumerable<NetworkUsers>, IEnumerable<NetworkUsersDTO>>(users).First();
+        }
     }
 }
