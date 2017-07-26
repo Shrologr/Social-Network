@@ -12,6 +12,7 @@ using Social_Network.WEB.Filters;
 
 namespace Social_Network.WEB.Controllers
 {
+    [NetworkAuthentication]
     public class UserController : Controller
     {
         IUserService userService;
@@ -19,14 +20,57 @@ namespace Social_Network.WEB.Controllers
         {
             userService = service;
         }
-        [NetworkAuthentication]
-        public ActionResult MainPage()
+        public ActionResult MainPage(string id)
         {
-            var guid = Guid.Parse(HttpContext.Request.Cookies["SocialNetworkID"].Value);
-            var user = userService.GetUser(guid);
+            var user = GetAuthenticatedUser();
+            NetworkUsersDTO urlUser = null;
+            if (id != null)
+            {
+                urlUser = userService.GetUser(id);
+            }
             Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsersDTO, UserInfoViewModel>());
-            var userInfo = Mapper.Map<NetworkUsersDTO, UserInfoViewModel>(user);
+            UserInfoViewModel userInfo;
+            userInfo = Mapper.Map<NetworkUsersDTO, UserInfoViewModel>((urlUser != null) ? urlUser : user);
+            userInfo.AuthenticatedURL = user.URL;
             return View(userInfo);
         }
-	}
+
+        public ActionResult Edit() 
+        {
+            var user = GetAuthenticatedUser();
+            Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsersDTO, EditViewModel>());
+            var model = Mapper.Map<NetworkUsersDTO, EditViewModel>(user);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Edit(EditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Mapper.Initialize(cfg => cfg.CreateMap<EditViewModel, NetworkUsersDTO>());
+                    var user = Mapper.Map<EditViewModel, NetworkUsersDTO>(model);
+                    user.UserGUID = Guid.Parse(HttpContext.Request.Cookies["SocialNetworkID"].Value);
+                    userService.UpdateUser(user);
+                }
+                catch 
+                {
+                    return View(model);
+                }
+            }
+            return RedirectToAction("MainPage", "User");
+        }
+
+        private NetworkUsersDTO GetAuthenticatedUser()
+        {
+            var guid = Guid.Parse(HttpContext.Request.Cookies["SocialNetworkID"].Value);
+            return userService.GetUser(guid);
+        }
+        protected override void Dispose(bool disposing)
+        {
+            userService.Dispose();
+            base.Dispose(disposing);
+        }
+    }
 }

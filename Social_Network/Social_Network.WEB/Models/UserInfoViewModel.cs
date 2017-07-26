@@ -14,6 +14,7 @@ namespace Social_Network.WEB.Models
         public bool Show_birthday { get; set; }
         public string Mail { get; set; }
         public string URL { get; set; }
+        public string AuthenticatedURL { get; set; }
         public int? Photo_ID { get; set; }
     }
 }

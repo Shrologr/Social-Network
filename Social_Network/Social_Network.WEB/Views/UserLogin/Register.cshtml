@@ -38,6 +38,10 @@
 
             </div>
             <div class="form-group">
+                <label>Show your birthday?</label>
+                @Html.TextBoxFor(x => x.Show_birthday, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
                 <label>Your gender</label>
                 @Html.DropDownListFor(x => x.Gender, new[] {
                 new SelectListItem() { Text = "Male"},

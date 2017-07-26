@@ -25,12 +25,20 @@ namespace Social_Network.WEB.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
-            var sessionGuid = Guid.NewGuid();
-            var user = userService.GetUser(model.Mail, model.User_Password);
-            user.UserGUID = sessionGuid;
-            userService.UpdateUser(user);
-            HttpContext.Response.Cookies["SocialNetworkID"].Value = sessionGuid.ToString();
-            return RedirectToAction("MainPage", "User");
+            try
+            {
+                var user = userService.GetUser(model.Mail, model.User_Password);
+                var sessionGuid = Guid.NewGuid();
+
+                user.UserGUID = sessionGuid;
+                userService.UpdateUser(user);
+                HttpContext.Response.Cookies["SocialNetworkID"].Value = sessionGuid.ToString();
+                return RedirectToAction("MainPage", "User");
+            }
+            catch 
+            {
+                return View();
+            }
         }
         public ActionResult Register()
         {
@@ -52,7 +60,7 @@ namespace Social_Network.WEB.Controllers
                     return View();
                 }
                 var loginInfo = new LoginViewModel() { Mail = model.Mail, User_Password = model.User_Password };
-                return RedirectToAction("Login", "UserLogin", loginInfo);
+                return RedirectToAction("Login", loginInfo);
             }
             return View();
         }

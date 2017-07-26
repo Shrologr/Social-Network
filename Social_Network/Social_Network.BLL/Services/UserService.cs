@@ -63,7 +63,7 @@ namespace Social_Network.BLL.Services
         {
             Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsersDTO, NetworkUsers>());
             var newUser = Mapper.Map<NetworkUsersDTO, NetworkUsers>(user);
-            if (Database.NetworkUsers.Find(s => s.Mail == newUser.Mail).Count() > 0)
+            if (Database.NetworkUsers.Find(s => (s.Mail == newUser.Mail) || (s.URL == newUser.URL)).Any())
             {
                 throw new ValidationException("Such user already exists", ""); 
             }
@@ -105,6 +105,22 @@ namespace Social_Network.BLL.Services
         public NetworkUsersDTO GetUser(Guid guid)
         {
             var users = Database.NetworkUsers.Find(s => s.UserGUID == guid);
+            if (users.Count() == 0)
+            {
+                return null;
+            }
+            if (users.Count() > 1)
+            {
+                throw new ValidationException("Error. To many users...", "");
+            }
+            Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsers, NetworkUsersDTO>());
+            return Mapper.Map<IEnumerable<NetworkUsers>, IEnumerable<NetworkUsersDTO>>(users).First();
+        }
+
+
+        public NetworkUsersDTO GetUser(string url)
+        {
+            var users = Database.NetworkUsers.Find(s => s.URL == url);
             if (users.Count() == 0)
             {
                 return null;

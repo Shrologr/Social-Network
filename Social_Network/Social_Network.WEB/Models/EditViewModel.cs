@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Social_Network.WEB.Models
 {
-    public class RegistrarionViewModel
+    public class EditViewModel
     {
         public int ID { get; set; }
         [Required]
@@ -26,7 +26,7 @@ namespace Social_Network.WEB.Models
         [StringLength(35, MinimumLength = 5, ErrorMessage = "URL must be between 5 and 35 symbols")]
         public string URL { get; set; }
         [Required]
-        [StringLength(50, MinimumLength=15, ErrorMessage="Password must be between 15 and 50 symbols")]
+        [StringLength(50, MinimumLength = 15, ErrorMessage = "Password must be between 15 and 50 symbols")]
         [DataType(DataType.Password)]
         public string User_Password { get; set; }
         [Required]

@@ -146,6 +146,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EditViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegistrarionViewModel.cs" />
     <Compile Include="Models\UserInfoViewModel.cs" />
@@ -160,6 +161,7 @@
     <Content Include="Views\UserLogin\Login.cshtml" />
     <Content Include="Views\UserLogin\Register.cshtml" />
     <Content Include="Views\User\MainPage.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
