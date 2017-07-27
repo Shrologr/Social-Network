@@ -79,7 +79,22 @@
                 </div>
             </div>
         </div>
-
+        <div class="col-md-4">
+            <img class="img-responsive" src="/User/Image/@((Model.Photo_ID == null)?"":""+Model.Photo_ID)" alt="hui" />
+            @if (Model.URL == Model.AuthenticatedURL)
+            {
+                using (Html.BeginForm("MainPage", "User", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                {
+                    <div class="text-center form-group">
+                        <label class="form-control">Get a picture for this nigga!</label>
+                        <input id="ImageFile" name="ImageFile" type="file" accept="image/jpeg,image/png,image/jpg" class="control-label col-md-2 form-control" />
+                        <div class="form-control">
+                            <input type="submit" value="Save the picture of this nigga!" class="btn btn-default" />
+                        </div>
+                    </div>
+                }
+            }
+        </div>
     </div>
 </body>
 </html>

@@ -8,6 +8,7 @@ using AutoMapper;
 using Social_Network.BLL.DTO;
 using Social_Network.BLL.Infrastructure;
 using Social_Network.BLL.Interfaces;
+using Social_Network.WEB.Filters;
 
 namespace Social_Network.WEB.Controllers
 {
@@ -29,13 +30,14 @@ namespace Social_Network.WEB.Controllers
             {
                 var user = userService.GetUser(model.Mail, model.User_Password);
                 var sessionGuid = Guid.NewGuid();
-
                 user.UserGUID = sessionGuid;
                 userService.UpdateUser(user);
                 HttpContext.Response.Cookies["SocialNetworkID"].Value = sessionGuid.ToString();
+                NetworkAuthentication.AuthenticatedUser = user;
+                NetworkAuthentication.AuthenticatedUsersIDs.Add(sessionGuid, user.ID);
                 return RedirectToAction("MainPage", "User");
             }
-            catch 
+            catch
             {
                 return View();
             }
@@ -65,8 +67,9 @@ namespace Social_Network.WEB.Controllers
             return View();
         }
 
-        public ActionResult Logout() 
+        public ActionResult Logout()
         {
+            NetworkAuthentication.AuthenticatedUsersIDs.Remove(Guid.Parse(HttpContext.Request.Cookies["SocialNetworkID"].Value));
             HttpContext.Response.Cookies["SocialNetworkID"].Expires = DateTime.Now;
             return RedirectToAction("MainPage", "User");
         }

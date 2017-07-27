@@ -9,6 +9,8 @@ namespace Social_Network.WEB.Models
     public class EditViewModel
     {
         public int ID { get; set; }
+        public int? Photo_ID { get; set; }
+
         [Required]
         public string Name { get; set; }
         [Required]

@@ -4,17 +4,27 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Filters;
+using Social_Network.BLL.DTO;
 
 namespace Social_Network.WEB.Filters
 {
-    public class NetworkAuthentication:FilterAttribute,IAuthenticationFilter
+    public class NetworkAuthentication : FilterAttribute, IAuthenticationFilter
     {
+        public static Dictionary<Guid, int> AuthenticatedUsersIDs = new Dictionary<Guid, int>();
+        public static NetworkUsersDTO AuthenticatedUser { get; set; }
         public void OnAuthentication(AuthenticationContext filterContext)
         {
             var authenticatedStatus = filterContext.HttpContext.Request.Cookies["SocialNetworkID"];
             if (authenticatedStatus == null)
             {
                 filterContext.Result = new HttpUnauthorizedResult();
+                return;
+            }
+            Guid userGuid = Guid.Parse(authenticatedStatus.Value);
+            if (!AuthenticatedUsersIDs.ContainsKey(userGuid))
+            {
+                filterContext.Result = new HttpUnauthorizedResult();
+                return;
             }
         }
 
@@ -27,6 +37,16 @@ namespace Social_Network.WEB.Filters
                     new System.Web.Routing.RouteValueDictionary { 
                     { "controller", "UserLogin" }, { "action", "Login" } 
                    });
+                return;
+            }
+            Guid userGuid = Guid.Parse(authenticatedStatus.Value);
+            if (!AuthenticatedUsersIDs.ContainsKey(userGuid))
+            {
+                filterContext.Result = new RedirectToRouteResult(
+                    new System.Web.Routing.RouteValueDictionary { 
+                    { "controller", "UserLogin" }, { "action", "Login" } 
+                   });
+                return;
             }
         }
     }

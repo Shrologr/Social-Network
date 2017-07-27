@@ -71,5 +71,14 @@ namespace Social_Network.BLL.Services
         {
             Database.Dispose();
         }
+
+
+        public void UpdatePhoto(UserPhotosDTO photo)
+        {
+            Mapper.Initialize(cfg => cfg.CreateMap<UserPhotosDTO, UserPhotos>());
+            var photoForUpdate = Mapper.Map<UserPhotosDTO, UserPhotos>(photo);
+            Database.UserPhotos.Update(photoForUpdate);
+            Database.Save();
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace Social_Network.BLL.Interfaces
         IEnumerable<UserPhotosDTO> GetAllPhotos();
         UserPhotosDTO GetPhoto(int? id);
         void CreatePhoto(UserPhotosDTO photo);
+        void UpdatePhoto(UserPhotosDTO photo);
         void DeletePhoto(int? id);
         void Dispose();
     }

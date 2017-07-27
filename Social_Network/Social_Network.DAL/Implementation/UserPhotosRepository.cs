@@ -38,7 +38,11 @@ namespace Social_Network.DAL.Implementation
 
         public void Update(UserPhotos item)
         {
+            var oldPhoto = Get(item.ID);
+            db.Entry(oldPhoto).State = EntityState.Detached;
+            db.UserPhotos.Attach(item);
             db.Entry(item).State = EntityState.Modified;
+
         }
 
         public void Delete(int id)
