@@ -14,5 +14,6 @@ namespace Social_Network.WEB.Models
         public DateTime Date { get; set; }
         public string URL { get; set; }
         public string Authenticated_URL { get; set; }
+        public int Likes { get; set; }
     }
 }

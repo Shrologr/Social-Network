@@ -174,7 +174,8 @@ namespace Social_Network.WEB.Controllers
                     Text = item.Text,
                     Date = item.Date,
                     URL = user.URL,
-                    Authenticated_URL = NetworkAuthentication.AuthenticatedUser.URL
+                    Authenticated_URL = NetworkAuthentication.AuthenticatedUser.URL,
+                    Likes = postsService.GetPostLikes(item.ID).Count()
                 }
                 );
             }
@@ -182,9 +183,20 @@ namespace Social_Network.WEB.Controllers
         }
 
         [HttpPost]
+        public ActionResult LikePost(int? id)
+        {
+            if (id != null)
+            {
+                postsService.ChangePostLike(NetworkAuthentication.AuthenticatedUser.ID, id);
+                return Json(new { likes = postsService.GetPostLikes(id).Count() });
+            }
+            return Json(new { likes = 0 });
+        }
+
+        [HttpPost]
         public ActionResult RemovePost(int? id)
         {
-            if (id != null) 
+            if (id != null)
             {
                 postsService.DeletePost(id);
             }

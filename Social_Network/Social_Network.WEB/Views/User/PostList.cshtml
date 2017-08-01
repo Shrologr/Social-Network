@@ -2,6 +2,7 @@
 
 @foreach (var item in Model)
 {
+    string likeid = "likeid" + item.ID;
     <div>
         <div>
             @Html.ActionLink(item.PosterFullName, "MainPage", "User", new { id = item.URL }, null)
@@ -13,13 +14,16 @@
             }
         </div>
         <div>
-            @item.Date.Date
+            @item.Date
         </div>
         <div class="">
             @item.Text
         </div>
         <div>
             <img class="img-responsive" src="/User/PostImage/@((item.ID == null) ? "" : "" + item.ID)" alt="hui" />
+        </div>
+        <div class="btn" id=@likeid onclick="LikePost(@likeid,@item.ID)">
+            ♥ @item.Likes
         </div>
     </div>
 }

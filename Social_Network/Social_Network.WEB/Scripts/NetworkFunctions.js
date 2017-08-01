@@ -30,6 +30,17 @@ function RemovePost(divid, userid, postId) {
     })
 }
 
+function LikePost(divid, postId) {
+    $.ajax({
+        type: "POST",
+        url: '/User/LikePost/',
+        data: { id: postId },
+        success: function (data) {
+            $(divid).html("♥ "+data["likes"])
+        }
+    })
+}
+
 function CreatePostAjaxCall(divid, userid, textid, imageid) {
     var formdata = new FormData();
     var files = $(imageid).get(0).files;
