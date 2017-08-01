@@ -18,10 +18,12 @@ namespace Social_Network.WEB.Controllers
     {
         public IUserService userService;
         private IUserPhotoService photoService;
-        public UserController(IUserService service, IUserPhotoService otherService)
+        private IPostsService postsService;
+        public UserController(IUserService service, IUserPhotoService otherService, IPostsService postsServiceParam)
         {
             userService = service;
             photoService = otherService;
+            postsService = postsServiceParam;
         }
         public ActionResult MainPage(string id)
         {
@@ -40,9 +42,20 @@ namespace Social_Network.WEB.Controllers
         {
             if (id == null)
                 return File(new byte[0], "jpeg");
-            else 
+            else
             {
                 var photo = photoService.GetPhoto(id);
+                return File(photo.Image, "jpeg");
+            }
+        }
+
+        public ActionResult PostImage(int? id)
+        {
+            if (id == null)
+                return File(new byte[0], "jpeg");
+            else
+            {
+                var photo = postsService.GetPost(id);
                 return File(photo.Image, "jpeg");
             }
         }
@@ -99,6 +112,8 @@ namespace Social_Network.WEB.Controllers
             {
                 try
                 {
+                    if (userService.GetAllUsers().Where(s => (s.Mail != NetworkAuthentication.AuthenticatedUser.Mail && s.Mail == model.Mail) || (s.URL != NetworkAuthentication.AuthenticatedUser.URL && s.URL == model.URL)).Any())
+                        return View(model);
                     Mapper.Initialize(cfg => cfg.CreateMap<EditViewModel, NetworkUsersDTO>());
                     var user = Mapper.Map<EditViewModel, NetworkUsersDTO>(model);
                     user.UserGUID = NetworkAuthentication.AuthenticatedUser.UserGUID;
@@ -111,6 +126,69 @@ namespace Social_Network.WEB.Controllers
                 }
             }
             return RedirectToAction("MainPage", "User");
+        }
+        [HttpPost]
+        public ActionResult UserList()
+        {
+            var users = userService.GetAllUsers().Where(s => s.URL != NetworkAuthentication.AuthenticatedUser.URL);
+            List<UserListItemViewModel> userList = new List<UserListItemViewModel>();
+            foreach (var item in users)
+            {
+                userList.Add(new UserListItemViewModel() { URL = item.URL });
+            }
+            return PartialView("UserList", userList);
+        }
+
+        [HttpPost]
+        public ActionResult PostCreate(int? id, string text, HttpPostedFileBase image)
+        {
+            if (id != null)
+            {
+                var post = new PostsDTO()
+                {
+                    Date = DateTime.Now,
+                    Image = StreamToByteArray(image.InputStream),
+                    Poster_ID = NetworkAuthentication.AuthenticatedUser.ID,
+                    User_ID = id.Value,
+                    Text = text
+                };
+                postsService.CreatePost(post);
+            }
+            return Json(new { result = "Something" });
+        }
+
+
+
+        [HttpPost]
+        public ActionResult PostList(int? id)
+        {
+            var posts = postsService.GetUserPosts(id);
+            var newPosts = new List<PostListItemViewModel>();
+            foreach (var item in posts)
+            {
+                var user = userService.GetUser(item.Poster_ID);
+                newPosts.Add(new PostListItemViewModel()
+                {
+                    ID = item.ID,
+                    PosterFullName = user.Name + " " + user.Surname,
+                    Text = item.Text,
+                    Date = item.Date,
+                    URL = user.URL,
+                    Authenticated_URL = NetworkAuthentication.AuthenticatedUser.URL
+                }
+                );
+            }
+            return PartialView("PostList", newPosts);
+        }
+
+        [HttpPost]
+        public ActionResult RemovePost(int? id)
+        {
+            if (id != null) 
+            {
+                postsService.DeletePost(id);
+            }
+            return new EmptyResult();
         }
         protected override void Dispose(bool disposing)
         {

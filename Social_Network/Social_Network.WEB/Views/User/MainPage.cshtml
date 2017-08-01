@@ -10,9 +10,11 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>MainPage</title>
+    <script src="@Url.Content("~/Scripts/jquery-3.1.1.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/NetworkFunctions.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.js")" type="text/javascript"></script>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
-    <script src="@Url.Content("~/Scripts/jquery-3.1.1.js")" type="text/javascript"></script>
     <style>
         .btn a {
             color: white;
@@ -20,28 +22,28 @@
         }
     </style>
 </head>
-<body>
+<body onload="SetIntervalOnLoad('#postsID', ''+@Model.ID)">
     <div class="row">
         <div class="col-md-4">
-            <div class="text-center panel-heading">
-                <h1>@Model.AuthenticatedURL</h1>
-            </div>
-            <div class="text-center">
-                <div class="btn btn-success">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="text-center panel-heading">
+                    <h1>@Model.AuthenticatedURL</h1>
+                </li>
+                <li>
                     @Html.ActionLink("View the page of this nigga!", "MainPage", "User", new { id = @Model.AuthenticatedURL }, null)
-                </div>
-            </div>
-            <br />
-            <div class="text-center">
-                <div class="btn btn-success">
+                </li>
+                <li>
                     @Html.ActionLink("Update the data on this nigga!", "Edit", "User")
-                </div>
-            </div>
-            <br />
-            <div class="text-center">
-                <div class="btn btn-success">
+                </li>
+                <li>
                     @Html.ActionLink("Log the shit out of this nigga!", "Logout", "UserLogin")
+                </li>
+            </ul>
+            <div class="btn-group dropdown">
+                <div type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" onclick="UsersAjaxCall('#usersList')">
+                    Show all the niggas!<b class="caret"></b>
                 </div>
+                <ul id="usersList" class="dropdown-menu" role="menu"></ul>
             </div>
         </div>
         <div class="panel-body col-md-4">
@@ -94,6 +96,18 @@
                     </div>
                 }
             }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+            <textarea placeholder="Enter the text for the nigga's post" id="newPostText" name="newPostText" rows="6"></textarea>
+            <input id="newPostImage" name="newPostImage" type="file" accept="image/jpeg,image/png,image/jpg" />
+            <div class="btn btn-default" onclick="CreatePostAjaxCall('#postsID', @Model.ID, '#newPostText', '#newPostImage')">
+                Submit the post for the nigga!
+            </div>
+            <div id="postsID">
+
+            </div>
         </div>
     </div>
 </body>

@@ -123,6 +123,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Scripts\NetworkFunctions.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -135,6 +136,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -148,8 +150,10 @@
     </Compile>
     <Compile Include="Models\EditViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\PostListItemViewModel.cs" />
     <Compile Include="Models\RegistrarionViewModel.cs" />
     <Compile Include="Models\UserInfoViewModel.cs" />
+    <Compile Include="Models\UserListItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\NinjectDependencyResolver.cs" />
   </ItemGroup>
@@ -162,6 +166,8 @@
     <Content Include="Views\UserLogin\Register.cshtml" />
     <Content Include="Views\User\MainPage.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\UserList.cshtml" />
+    <Content Include="Views\User\PostList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

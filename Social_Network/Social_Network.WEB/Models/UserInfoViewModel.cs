@@ -7,6 +7,8 @@ namespace Social_Network.WEB.Models
 {
     public class UserInfoViewModel
     {
+        public int ID { get; set; }
+
         public string Name { get; set; }
         public string Surname { get; set; }
         public System.DateTime Birthday { get; set; }

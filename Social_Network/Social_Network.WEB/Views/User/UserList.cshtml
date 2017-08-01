@@ -1,0 +1,5 @@
+﻿@model List<Social_Network.WEB.Models.UserListItemViewModel>
+@for (int i = 0; i < Model.Count; i++ )
+{ 
+    <li>@Html.ActionLink(Model[i].URL, "MainPage", "User", new { id = Model[i].URL }, null)</li>
+}

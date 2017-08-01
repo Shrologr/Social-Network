@@ -1,0 +1,25 @@
+﻿@model List<Social_Network.WEB.Models.PostListItemViewModel>
+
+@foreach (var item in Model)
+{
+    <div>
+        <div>
+            @Html.ActionLink(item.PosterFullName, "MainPage", "User", new { id = item.URL }, null)
+            @if (item.Authenticated_URL == item.URL)
+            {
+                <div class="right btn btn-link" onclick="RemovePost('#postsID',@item.UserID,@item.ID)">
+                    Delete the post!
+                </div>
+            }
+        </div>
+        <div>
+            @item.Date.Date
+        </div>
+        <div class="">
+            @item.Text
+        </div>
+        <div>
+            <img class="img-responsive" src="/User/PostImage/@((item.ID == null) ? "" : "" + item.ID)" alt="hui" />
+        </div>
+    </div>
+}
