@@ -168,6 +168,7 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\UserList.cshtml" />
     <Content Include="Views\User\PostList.cshtml" />
+    <Content Include="Views\User\LikeList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

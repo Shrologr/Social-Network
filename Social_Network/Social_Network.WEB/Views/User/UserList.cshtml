@@ -1,5 +1,5 @@
 ﻿@model List<Social_Network.WEB.Models.UserListItemViewModel>
 @for (int i = 0; i < Model.Count; i++ )
 { 
-    <li>@Html.ActionLink(Model[i].URL, "MainPage", "User", new { id = Model[i].URL }, null)</li>
+    <li>@Html.ActionLink(Model[i].Name + " " + Model[i].Surname, "MainPage", "User", new { id = Model[i].URL }, null)</li>
 }

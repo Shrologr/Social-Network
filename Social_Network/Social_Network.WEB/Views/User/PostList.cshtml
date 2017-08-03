@@ -3,13 +3,13 @@
 @foreach (var item in Model)
 {
     string likeid = "likeid" + item.ID;
+    string userlikes = "userlikesID" + item.ID;
     <div>
         <div>
             @Html.ActionLink(item.PosterFullName, "MainPage", "User", new { id = item.URL }, null)
             @if (item.Authenticated_URL == item.URL)
             {
-                <div class="right btn btn-link" onclick="RemovePost('#postsID',@item.UserID,@item.ID)">
-                    Delete the post!
+                <div class="glyphicon glyphicon-remove pull-right btn" onclick="RemovePost('#postsID',@item.UserID,@item.ID)">
                 </div>
             }
         </div>
@@ -22,8 +22,10 @@
         <div>
             <img class="img-responsive" src="/User/PostImage/@((item.ID == null) ? "" : "" + item.ID)" alt="hui" />
         </div>
-        <div class="btn" id=@likeid onclick="LikePost(@likeid,@item.ID)">
+        <div id=@userlikes></div>
+        <div class="btn" id=@likeid onclick="LikePost(@likeid,@item.ID)" onmouseover="ShowUserLikes('#@userlikes', @item.ID)">
             ♥ @item.Likes
         </div>
+        
     </div>
 }

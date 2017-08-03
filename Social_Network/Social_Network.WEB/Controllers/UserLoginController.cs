@@ -70,7 +70,7 @@ namespace Social_Network.WEB.Controllers
         public ActionResult Logout()
         {
             NetworkAuthentication.AuthenticatedUsersIDs.Remove(Guid.Parse(HttpContext.Request.Cookies["SocialNetworkID"].Value));
-            HttpContext.Response.Cookies["SocialNetworkID"].Expires = DateTime.Now;
+            HttpContext.Response.Cookies["SocialNetworkID"].Expires = DateTime.UtcNow;
             return RedirectToAction("MainPage", "User");
         }
         protected override void Dispose(bool disposing)

@@ -128,13 +128,18 @@ namespace Social_Network.WEB.Controllers
             return RedirectToAction("MainPage", "User");
         }
         [HttpPost]
-        public ActionResult UserList()
+        public ActionResult UserList(string text)
         {
-            var users = userService.GetAllUsers().Where(s => s.URL != NetworkAuthentication.AuthenticatedUser.URL);
+            var users = userService.GetAllUsers().Where(s => s.URL != NetworkAuthentication.AuthenticatedUser.URL && (s.Name+" "+s.Surname).ToUpper().Contains(text.ToUpper()));
             List<UserListItemViewModel> userList = new List<UserListItemViewModel>();
             foreach (var item in users)
             {
-                userList.Add(new UserListItemViewModel() { URL = item.URL });
+                userList.Add(new UserListItemViewModel() 
+                { 
+                    URL = item.URL,
+                    Name = item.Name,
+                    Surname = item.Surname
+                });
             }
             return PartialView("UserList", userList);
         }
@@ -199,6 +204,27 @@ namespace Social_Network.WEB.Controllers
             if (id != null)
             {
                 postsService.DeletePost(id);
+            }
+            return new EmptyResult();
+        }
+
+        [HttpPost]
+        public ActionResult ShowUserLikes(int? id) 
+        {
+            if (id != null) 
+            {
+                var likes = postsService.GetPostLikes(id);
+                List<UserListItemViewModel> userList = new List<UserListItemViewModel>();
+                foreach (var item in likes)
+                {
+                    userList.Add(new UserListItemViewModel()
+                    {
+                        URL = item.URL,
+                        Name = item.Name,
+                        Surname = item.Surname
+                    });
+                }
+                return PartialView("LikeList", userList);
             }
             return new EmptyResult();
         }

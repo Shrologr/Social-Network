@@ -15,7 +15,7 @@ namespace Social_Network.WEB.Filters
         public void OnAuthentication(AuthenticationContext filterContext)
         {
             var authenticatedStatus = filterContext.HttpContext.Request.Cookies["SocialNetworkID"];
-            if (authenticatedStatus == null)
+            if (authenticatedStatus == null || authenticatedStatus.Value == "")
             {
                 filterContext.Result = new HttpUnauthorizedResult();
                 return;
@@ -31,7 +31,7 @@ namespace Social_Network.WEB.Filters
         public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)
         {
             var authenticatedStatus = filterContext.HttpContext.Request.Cookies["SocialNetworkID"];
-            if (authenticatedStatus == null)
+            if (authenticatedStatus == null || authenticatedStatus.Value == "")
             {
                 filterContext.Result = new RedirectToRouteResult(
                     new System.Web.Routing.RouteValueDictionary { 

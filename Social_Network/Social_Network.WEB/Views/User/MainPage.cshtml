@@ -20,6 +20,9 @@
             color: white;
             text-decoration: none;
         }
+        .input-append .btn.dropdown-toggle {
+            float: none;
+        }
     </style>
 </head>
 <body onload="SetIntervalOnLoad('#postsID', ''+@Model.ID)">
@@ -39,11 +42,14 @@
                     @Html.ActionLink("Log the shit out of this nigga!", "Logout", "UserLogin")
                 </li>
             </ul>
-            <div class="btn-group dropdown">
-                <div type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" onclick="UsersAjaxCall('#usersList')">
-                    Show all the niggas!<b class="caret"></b>
+            <div class="input-group">
+                <input id="searchTextID" placeholder="Niggas for search..." type="text" class="form-control" aria-label="..." onchange="UsersAjaxCall('#usersList', '#searchTextID')">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <b class="caret"></b>
+                    </button>
+                    <ul id="usersList" class="dropdown-menu dropdown-menu-right" role="menu"></ul>
                 </div>
-                <ul id="usersList" class="dropdown-menu" role="menu"></ul>
             </div>
         </div>
         <div class="panel-body col-md-4">

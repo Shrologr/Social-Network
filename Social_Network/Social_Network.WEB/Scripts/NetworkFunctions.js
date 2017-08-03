@@ -1,7 +1,8 @@
-﻿function UsersAjaxCall(divid) {
+﻿function UsersAjaxCall(divid, textid) {
     $.ajax({
         type: "POST",
         url: '/User/UserList/',
+        data: {text: $(textid).val()},
         success: function (data) {
             $(divid).html(data)
         }
@@ -60,6 +61,23 @@ function CreatePostAjaxCall(divid, userid, textid, imageid) {
             PostsAjaxCall(divid, userid)
         }
     })
+}
+
+function ShowUserLikes(divid, postid) {
+    $.ajax({
+        type: "POST",
+        url: '/User/ShowUserLikes/',
+        data: { id: postid },
+        success: function (data) {
+            $(divid).html(data)
+        }
+    })
+    setTimeout(function () { HideUserLikes(divid) }, 4000)
+}
+
+function HideUserLikes(divid)
+{
+    $(divid).empty()
 }
 
 function SetIntervalOnLoad(divid, userid) {
