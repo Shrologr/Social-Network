@@ -72,7 +72,6 @@ function ShowUserLikes(divid, postid) {
             $(divid).html(data)
         }
     })
-    setTimeout(function () { HideUserLikes(divid) }, 4000)
 }
 
 function HideUserLikes(divid)

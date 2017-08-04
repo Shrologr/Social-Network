@@ -4,7 +4,7 @@
 {
     string likeid = "likeid" + item.ID;
     string userlikes = "userlikesID" + item.ID;
-    <div>
+    <div class="col-md-10">
         <div>
             @Html.ActionLink(item.PosterFullName, "MainPage", "User", new { id = item.URL }, null)
             @if (item.Authenticated_URL == item.URL)

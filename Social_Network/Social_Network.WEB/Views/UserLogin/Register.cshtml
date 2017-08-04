@@ -15,59 +15,61 @@
     <script src="@Url.Content("~/Scripts/jquery-3.1.1.js")" type="text/javascript"></script>
 </head>
 <body>
-    <div class="text-center panel-heading">
+    <div>
         <h1>Please, fill your personal info...</h1>
 
     </div>
-    <div class="panel-body">
-        @using (Html.BeginForm())
-        {
+    @using (Html.BeginForm())
+    {
+        <div>
+
             @Html.ValidationSummary()
             <div class="form-group">
                 <label>Your Name</label>
-                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                @Html.TextBoxFor(x => x.Name, new { @class = "control-label col-md-4" })
             </div>
             <div class="form-group">
                 <label>Your Surname</label>
-                @Html.TextBoxFor(x => x.Surname, new { @class = "form-control" })
+                @Html.TextBoxFor(x => x.Surname, new { @class = "control-label col-md-4" })
 
             </div>
             <div class="form-group">
                 <label>Your Birthday</label>
-                @Html.TextBoxFor(x => x.Birthday, new { @class = "form-control" })
+                @Html.TextBoxFor(x => x.Birthday, new { @class = "control-label col-md-4" })
 
             </div>
             <div class="form-group">
                 <label>Show your birthday?</label>
-                @Html.TextBoxFor(x => x.Show_birthday, new { @class = "form-control" })
+                @Html.TextBoxFor(x => x.Show_birthday, new { @class = "control-label col-md-4" })
             </div>
             <div class="form-group">
                 <label>Your gender</label>
                 @Html.DropDownListFor(x => x.Gender, new[] {
                 new SelectListItem() { Text = "Male"},
                 new SelectListItem() { Text = "Female"}
-            })
+            }, new { @class = "control-label col-md-4" })
             </div>
             <div class="form-group">
                 <label>Your Email</label>
-                @Html.TextBoxFor(x => x.Mail, new { @class = "form-control" })
+                @Html.TextBoxFor(x => x.Mail, new { @class = "control-label col-md-4" })
             </div>
             <div class="form-group">
                 <label>Your URL</label>
-                @Html.TextBoxFor(x => x.URL, new { @class = "form-control" })
+                @Html.TextBoxFor(x => x.URL, new { @class = "control-label col-md-4" })
             </div>
             <div class="form-group">
                 <label>Your Password</label>
-                @Html.PasswordFor(x => x.User_Password, new { @class = "form-control" })
+                @Html.PasswordFor(x => x.User_Password, new { @class = "control-label col-md-4" })
             </div>
             <div class="form-group">
                 <label>Confirm Password</label>
-                @Html.PasswordFor(x => x.PasswordConfirm, new { @class = "form-control" })
+                @Html.PasswordFor(x => x.PasswordConfirm, new { @class = "control-label col-md-4" })
             </div>
-            <div class="text-center">
+            <div>
                 <input type="submit" value="Register this nigga..." class="btn btn-success" />
             </div>
-        }
-    </div>
+        </div>
+
+    }
 </body>
 </html>
