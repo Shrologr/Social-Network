@@ -22,10 +22,11 @@
         <div>
             <img class="img-responsive" src="/User/PostImage/@((item.ID == null) ? "" : "" + item.ID)" alt="hui" />
         </div>
-        <div id=@userlikes></div>
         <div class="btn" id=@likeid onclick="LikePost(@likeid,@item.ID)" onmouseover="ShowUserLikes('#@userlikes', @item.ID)">
             ♥ @item.Likes
         </div>
+        <div id=@userlikes onmouseleave="HideUserLikes('#@userlikes')" class="panel panel-default"></div>
+
         
     </div>
 }

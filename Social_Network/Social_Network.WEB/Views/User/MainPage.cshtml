@@ -26,12 +26,26 @@
         }
 
         #maindiv {
-            margin-top: 150px;
+            margin-top: 120px;
+        }
+
+        .urldiv {
+            margin-top: 6px;
+        }
+        input[type="file"] {
+            display: none;
+        }
+
+        .custom-file-upload {
+            border: 1px solid #ccc;
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body onload="SetIntervalOnLoad('#postsID', ''+@Model.ID)">
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top col-md-8 col-md-offset-2">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -39,10 +53,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <div class="navbar-brand">
+                <div class="navbar-brand urldiv">
                     @Model.AuthenticatedURL
                 </div>
-                <div class="input-group navbar-brand">
+                <div class="input-group navbar-brand col-md-8">
                     <input id="searchTextID" placeholder="Niggas for search..." type="text" class="form-control" aria-label="..." onchange="UsersAjaxCall('#usersList', '#searchTextID')">
                     <div class="input-group-btn">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -68,7 +82,7 @@
         </div>
     </div>
     <div id="maindiv" class="row">
-        <div class="panel-body col-md-4">
+        <div class="panel-body col-md-4 col-md-offset-2">
             <div class="text-center panel-heading">
                 <h1>This nigga's info!</h1>
             </div>
@@ -110,9 +124,11 @@
                 using (Html.BeginForm("MainPage", "User", FormMethod.Post, new { @enctype = "multipart/form-data" }))
                 {
                     <div class="text-center form-group">
-                        <label class="form-control">Get a picture for this nigga!</label>
-                        <input id="ImageFile" name="ImageFile" type="file" accept="image/jpeg,image/png,image/jpg" class="control-label col-md-2 form-control" />
-                        <div class="form-control">
+                        <label class="form-control custom-file-upload">
+                            Get a picture for this nigga!
+                            <input id="ImageFile" name="ImageFile" type="file" accept="image/jpeg image/png image/jpg" />
+                        </label>
+                        <div>
                             <input type="submit" value="Save the picture of this nigga!" class="btn btn-default" />
                         </div>
                     </div>
@@ -122,8 +138,14 @@
     </div>
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
-            <textarea placeholder="Enter the text for the nigga's post" id="newPostText" name="newPostText" rows="6"></textarea>
-            <input id="newPostImage" name="newPostImage" type="file" accept="image/jpeg,image/png,image/jpg" />
+            <h4>Create a new post, nigga!</h4>
+            <div>
+                <textarea placeholder="Enter the text for the nigga's post" id="newPostText" name="newPostText" rows="6"></textarea>
+            </div>
+            <label class="custom-file-upload btn btn-default">
+                <input id="newPostImage" name="newPostImage" type="file" accept="image/jpeg image/png image/jpg" />
+                Get a fucking image for the post!
+            </label>
             <div class="btn btn-default" onclick="CreatePostAjaxCall('#postsID', @Model.ID, '#newPostText', '#newPostImage')">
                 Submit the post for the nigga!
             </div>

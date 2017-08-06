@@ -130,12 +130,12 @@ namespace Social_Network.WEB.Controllers
         [HttpPost]
         public ActionResult UserList(string text)
         {
-            var users = userService.GetAllUsers().Where(s => s.URL != NetworkAuthentication.AuthenticatedUser.URL && (s.Name+" "+s.Surname).ToUpper().Contains(text.ToUpper()));
+            var users = userService.GetAllUsers().Where(s => s.URL != NetworkAuthentication.AuthenticatedUser.URL && (s.Name + " " + s.Surname).ToUpper().Contains(text.ToUpper()));
             List<UserListItemViewModel> userList = new List<UserListItemViewModel>();
             foreach (var item in users)
             {
-                userList.Add(new UserListItemViewModel() 
-                { 
+                userList.Add(new UserListItemViewModel()
+                {
                     URL = item.URL,
                     Name = item.Name,
                     Surname = item.Surname
@@ -152,7 +152,7 @@ namespace Social_Network.WEB.Controllers
                 var post = new PostsDTO()
                 {
                     Date = DateTime.Now,
-                    Image = StreamToByteArray(image.InputStream),
+                    Image = (image != null) ? StreamToByteArray(image.InputStream) : null,
                     Poster_ID = NetworkAuthentication.AuthenticatedUser.ID,
                     User_ID = id.Value,
                     Text = text
@@ -209,9 +209,9 @@ namespace Social_Network.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult ShowUserLikes(int? id) 
+        public ActionResult ShowUserLikes(int? id)
         {
-            if (id != null) 
+            if (id != null)
             {
                 var likes = postsService.GetPostLikes(id);
                 List<UserListItemViewModel> userList = new List<UserListItemViewModel>();
