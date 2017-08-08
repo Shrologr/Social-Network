@@ -21,8 +21,9 @@ namespace Social_Network.BLL.Services
         }
         public IEnumerable<PostsDTO> GetAllPosts()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<Posts, PostsDTO>());
-            return Mapper.Map<IEnumerable<Posts>, IEnumerable<PostsDTO>>(Database.Posts.GetAll());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Posts, PostsDTO>());
+            var mapper = config.CreateMapper();
+            return mapper.Map<IEnumerable<Posts>, IEnumerable<PostsDTO>>(Database.Posts.GetAll());
         }
 
         public IEnumerable<PostsDTO> GetUserPosts(int? id)
@@ -31,8 +32,9 @@ namespace Social_Network.BLL.Services
             {
                 throw new ValidationException("Id is null", "");
             }
-            Mapper.Initialize(cfg => cfg.CreateMap<Posts, PostsDTO>());
-            return Mapper.Map<IEnumerable<Posts>, IEnumerable<PostsDTO>>(Database.Posts.Find(s=>s.User_ID == id.Value)).Reverse();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Posts, PostsDTO>());
+            var mapper = config.CreateMapper();
+            return mapper.Map<IEnumerable<Posts>, IEnumerable<PostsDTO>>(Database.Posts.Find(s=>s.User_ID == id.Value)).Reverse();
         }
 
         public PostsDTO GetPost(int? id)
@@ -46,14 +48,16 @@ namespace Social_Network.BLL.Services
             {
                 throw new ValidationException("No post with this id", "");
             }
-            Mapper.Initialize(cfg => cfg.CreateMap<Posts, PostsDTO>());
-            return Mapper.Map<Posts, PostsDTO>(post);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Posts, PostsDTO>());
+            var mapper = config.CreateMapper();
+            return mapper.Map<Posts, PostsDTO>(post);
         }
 
         public void CreatePost(PostsDTO post)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<PostsDTO, Posts>());
-            var newPost = Mapper.Map<PostsDTO, Posts>(post);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<PostsDTO, Posts>());
+            var mapper = config.CreateMapper();
+            var newPost = mapper.Map<PostsDTO, Posts>(post);
             Database.Posts.Create(newPost);
             Database.Save();
         }
@@ -69,8 +73,9 @@ namespace Social_Network.BLL.Services
             {
                 throw new ValidationException("No post with such id", "");
             }
-            Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsers, NetworkUsersDTO>());
-            return Mapper.Map<IEnumerable<NetworkUsers>, IEnumerable<NetworkUsersDTO>>(post.NetworkUsers).Reverse();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<NetworkUsers, NetworkUsersDTO>());
+            var mapper = config.CreateMapper();
+            return mapper.Map<IEnumerable<NetworkUsers>, IEnumerable<NetworkUsersDTO>>(post.NetworkUsers).Reverse();
         }
 
         public void ChangePostLike(int? userId, int? postId)

@@ -32,6 +32,7 @@
         .urldiv {
             margin-top: 6px;
         }
+
         input[type="file"] {
             display: none;
         }
@@ -146,7 +147,7 @@
                 <input id="newPostImage" name="newPostImage" type="file" accept="image/jpeg image/png image/jpg" />
                 Get a fucking image for the post!
             </label>
-            <div class="btn btn-default" onclick="CreatePostAjaxCall('#postsID', @Model.ID, '#newPostText', '#newPostImage')">
+            <div class="btn btn-default" onclick="CreatePostAjaxCall('#postsID', ''+@Model.ID, '#newPostText', '#newPostImage')">
                 Submit the post for the nigga!
             </div>
             <div id="postsID">

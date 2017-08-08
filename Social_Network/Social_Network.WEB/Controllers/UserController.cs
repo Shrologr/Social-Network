@@ -30,11 +30,19 @@ namespace Social_Network.WEB.Controllers
             NetworkUsersDTO urlUser = null;
             if (id != null)
             {
-                urlUser = userService.GetUser(id);
+                try
+                {
+                    urlUser = userService.GetUser(id);
+                }
+                catch 
+                { 
+                
+                }
             }
-            Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsersDTO, UserInfoViewModel>());
             UserInfoViewModel userInfo;
-            userInfo = Mapper.Map<NetworkUsersDTO, UserInfoViewModel>((urlUser != null) ? urlUser : NetworkAuthentication.AuthenticatedUser);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<NetworkUsersDTO, UserInfoViewModel>());
+            var mapper = config.CreateMapper();
+            userInfo = mapper.Map<NetworkUsersDTO, UserInfoViewModel>((urlUser != null) ? urlUser : NetworkAuthentication.AuthenticatedUser);
             userInfo.AuthenticatedURL = NetworkAuthentication.AuthenticatedUser.URL;
             return View(userInfo);
         }
@@ -44,8 +52,15 @@ namespace Social_Network.WEB.Controllers
                 return File(new byte[0], "jpeg");
             else
             {
-                var photo = photoService.GetPhoto(id);
-                return File(photo.Image, "jpeg");
+                try
+                {
+                    var photo = photoService.GetPhoto(id);
+                    return File(photo.Image, "jpeg");
+                }
+                catch 
+                {
+                    return File(new byte[0], "jpeg");                    
+                }
             }
         }
 
@@ -55,16 +70,24 @@ namespace Social_Network.WEB.Controllers
                 return File(new byte[0], "jpeg");
             else
             {
-                var photo = postsService.GetPost(id);
-                return File(photo.Image, "jpeg");
+                try
+                {
+                    var photo = postsService.GetPost(id);
+                    return File(photo.Image, "jpeg");
+                }
+                catch 
+                {
+                    return File(new byte[0], "jpeg");                    
+                }
             }
         }
         [HttpPost]
         public ActionResult MainPage(HttpPostedFileBase ImageFile)
         {
             UserInfoViewModel userInfo;
-            Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsersDTO, UserInfoViewModel>());
-            userInfo = Mapper.Map<NetworkUsersDTO, UserInfoViewModel>(NetworkAuthentication.AuthenticatedUser);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<NetworkUsersDTO, UserInfoViewModel>());
+            var mapper = config.CreateMapper();
+            userInfo = mapper.Map<NetworkUsersDTO, UserInfoViewModel>(NetworkAuthentication.AuthenticatedUser);
             userInfo.AuthenticatedURL = NetworkAuthentication.AuthenticatedUser.URL;
             if (ImageFile == null)
                 return View(userInfo);
@@ -92,8 +115,9 @@ namespace Social_Network.WEB.Controllers
 
         public ActionResult Edit()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsersDTO, EditViewModel>());
-            var model = Mapper.Map<NetworkUsersDTO, EditViewModel>(NetworkAuthentication.AuthenticatedUser);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<NetworkUsersDTO, EditViewModel>());
+            var mapper = config.CreateMapper();
+            var model = mapper.Map<NetworkUsersDTO, EditViewModel>(NetworkAuthentication.AuthenticatedUser);
             return View(model);
         }
         private byte[] StreamToByteArray(Stream stream)
@@ -113,9 +137,12 @@ namespace Social_Network.WEB.Controllers
                 try
                 {
                     if (userService.GetAllUsers().Where(s => (s.Mail != NetworkAuthentication.AuthenticatedUser.Mail && s.Mail == model.Mail) || (s.URL != NetworkAuthentication.AuthenticatedUser.URL && s.URL == model.URL)).Any())
+                    {
                         return View(model);
-                    Mapper.Initialize(cfg => cfg.CreateMap<EditViewModel, NetworkUsersDTO>());
-                    var user = Mapper.Map<EditViewModel, NetworkUsersDTO>(model);
+                    }
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<EditViewModel, NetworkUsersDTO>());
+                    var mapper = config.CreateMapper();
+                    var user = mapper.Map<EditViewModel, NetworkUsersDTO>(model);
                     user.UserGUID = NetworkAuthentication.AuthenticatedUser.UserGUID;
                     userService.UpdateUser(user);
                     NetworkAuthentication.AuthenticatedUser = userService.GetUser(user.ID);

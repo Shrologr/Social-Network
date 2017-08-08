@@ -21,8 +21,9 @@ namespace Social_Network.BLL.Services
         }
         public IEnumerable<UserPhotosDTO> GetAllPhotos()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<UserPhotos, UserPhotosDTO>());
-            return Mapper.Map<IEnumerable<UserPhotos>, IEnumerable<UserPhotosDTO>>(Database.UserPhotos.GetAll());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserPhotos, UserPhotosDTO>());
+            var mapper = config.CreateMapper();
+            return mapper.Map<IEnumerable<UserPhotos>, IEnumerable<UserPhotosDTO>>(Database.UserPhotos.GetAll());
         }
         public UserPhotosDTO GetPhoto(int? id)
         {
@@ -35,14 +36,16 @@ namespace Social_Network.BLL.Services
             {
                 throw new ValidationException("No photo with this id", "");
             }
-            Mapper.Initialize(cfg => cfg.CreateMap<UserPhotos, UserPhotosDTO>());
-            return Mapper.Map<UserPhotos, UserPhotosDTO>(photo);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserPhotos, UserPhotosDTO>());
+            var mapper = config.CreateMapper();
+            return mapper.Map<UserPhotos, UserPhotosDTO>(photo);
         }
 
         public void CreatePhoto(UserPhotosDTO photo)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<UserPhotosDTO, UserPhotos>());
-            var newPhoto = Mapper.Map<UserPhotosDTO, UserPhotos>(photo);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserPhotosDTO, UserPhotos>());
+            var mapper = config.CreateMapper();
+            var newPhoto = mapper.Map<UserPhotosDTO, UserPhotos>(photo);
             Database.UserPhotos.Create(newPhoto);
             Database.Save();
         }
@@ -75,8 +78,9 @@ namespace Social_Network.BLL.Services
 
         public void UpdatePhoto(UserPhotosDTO photo)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<UserPhotosDTO, UserPhotos>());
-            var photoForUpdate = Mapper.Map<UserPhotosDTO, UserPhotos>(photo);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserPhotosDTO, UserPhotos>());
+            var mapper = config.CreateMapper();
+            var photoForUpdate = mapper.Map<UserPhotosDTO, UserPhotos>(photo);
             Database.UserPhotos.Update(photoForUpdate);
             Database.Save();
         }

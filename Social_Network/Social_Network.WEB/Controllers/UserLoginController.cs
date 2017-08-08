@@ -53,8 +53,13 @@ namespace Social_Network.WEB.Controllers
             {
                 try
                 {
-                    Mapper.Initialize(cfg => cfg.CreateMap<RegistrarionViewModel, NetworkUsersDTO>());
-                    var newUser = Mapper.Map<RegistrarionViewModel, NetworkUsersDTO>(model);
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<RegistrarionViewModel, NetworkUsersDTO>());
+                    var mapper = config.CreateMapper();
+                    var newUser = mapper.Map<RegistrarionViewModel, NetworkUsersDTO>(model);
+                    if (userService.GetUser(newUser.Mail, newUser.User_Password) != null || userService.GetUser(newUser.URL) != null) 
+                    {
+                        return View();                        
+                    }
                     userService.CreateUser(newUser);
                 }
                 catch

@@ -34,8 +34,9 @@ namespace Social_Network.BLL.Services
             {
                 throw new ValidationException("Error. To many users...", ""); 
             }
-            Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsers, NetworkUsersDTO>());
-            return Mapper.Map<IEnumerable<NetworkUsers>, IEnumerable<NetworkUsersDTO>>(users).First();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<NetworkUsers, NetworkUsersDTO>());
+            var mapper = config.CreateMapper();
+            return mapper.Map<IEnumerable<NetworkUsers>, IEnumerable<NetworkUsersDTO>>(users).First();
         }
 
         public NetworkUsersDTO GetUser(int? id)
@@ -49,20 +50,23 @@ namespace Social_Network.BLL.Services
             {
                 throw new ValidationException("No user with this id", "");
             }
-            Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsers, NetworkUsersDTO>());
-            return Mapper.Map<NetworkUsers, NetworkUsersDTO>(user);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<NetworkUsers, NetworkUsersDTO>());
+            var mapper = config.CreateMapper();
+            return mapper.Map<NetworkUsers, NetworkUsersDTO>(user);
         }
 
         public IEnumerable<NetworkUsersDTO> GetAllUsers()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsers, NetworkUsersDTO>());
-            return Mapper.Map<IEnumerable<NetworkUsers>, IEnumerable<NetworkUsersDTO>>(Database.NetworkUsers.GetAll());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<NetworkUsers, NetworkUsersDTO>());
+            var mapper = config.CreateMapper();
+            return mapper.Map<IEnumerable<NetworkUsers>, IEnumerable<NetworkUsersDTO>>(Database.NetworkUsers.GetAll());
         }
 
         public void CreateUser(NetworkUsersDTO user)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsersDTO, NetworkUsers>());
-            var newUser = Mapper.Map<NetworkUsersDTO, NetworkUsers>(user);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<NetworkUsersDTO, NetworkUsers>());
+            var mapper = config.CreateMapper();
+            var newUser = mapper.Map<NetworkUsersDTO, NetworkUsers>(user);
             if (Database.NetworkUsers.Find(s => (s.Mail == newUser.Mail) || (s.URL == newUser.URL)).Any())
             {
                 throw new ValidationException("Such user already exists", ""); 
@@ -89,8 +93,9 @@ namespace Social_Network.BLL.Services
         }
         public void UpdateUser(NetworkUsersDTO user)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsersDTO, NetworkUsers>());
-            var userForUpdate = Mapper.Map<NetworkUsersDTO, NetworkUsers>(user);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<NetworkUsersDTO, NetworkUsers>());
+            var mapper = config.CreateMapper();
+            var userForUpdate = mapper.Map<NetworkUsersDTO, NetworkUsers>(user);
             Database.NetworkUsers.Update(userForUpdate);
             Database.Save();
         }
@@ -113,8 +118,9 @@ namespace Social_Network.BLL.Services
             {
                 throw new ValidationException("Error. To many users...", "");
             }
-            Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsers, NetworkUsersDTO>());
-            return Mapper.Map<IEnumerable<NetworkUsers>, IEnumerable<NetworkUsersDTO>>(users).First();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<NetworkUsers, NetworkUsersDTO>());
+            var mapper = config.CreateMapper();
+            return mapper.Map<IEnumerable<NetworkUsers>, IEnumerable<NetworkUsersDTO>>(users).First();
         }
 
 
@@ -129,8 +135,9 @@ namespace Social_Network.BLL.Services
             {
                 throw new ValidationException("Error. To many users...", "");
             }
-            Mapper.Initialize(cfg => cfg.CreateMap<NetworkUsers, NetworkUsersDTO>());
-            return Mapper.Map<IEnumerable<NetworkUsers>, IEnumerable<NetworkUsersDTO>>(users).First();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<NetworkUsers, NetworkUsersDTO>());
+            var mapper = config.CreateMapper();
+            return mapper.Map<IEnumerable<NetworkUsers>, IEnumerable<NetworkUsersDTO>>(users).First();
         }
     }
 }
