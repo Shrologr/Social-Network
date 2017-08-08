@@ -10,6 +10,7 @@ using Social_Network.BLL.Infrastructure;
 using Social_Network.BLL.Interfaces;
 using Social_Network.WEB.Filters;
 using System.IO;
+using NLog;
 
 namespace Social_Network.WEB.Controllers
 {
@@ -19,11 +20,13 @@ namespace Social_Network.WEB.Controllers
         public IUserService userService;
         private IUserPhotoService photoService;
         private IPostsService postsService;
+        Logger logger;
         public UserController(IUserService service, IUserPhotoService otherService, IPostsService postsServiceParam)
         {
             userService = service;
             photoService = otherService;
             postsService = postsServiceParam;
+            logger = LogManager.GetCurrentClassLogger();
         }
         public ActionResult MainPage(string id)
         {
@@ -34,9 +37,9 @@ namespace Social_Network.WEB.Controllers
                 {
                     urlUser = userService.GetUser(id);
                 }
-                catch 
-                { 
-                
+                catch
+                {
+
                 }
             }
             UserInfoViewModel userInfo;
@@ -57,9 +60,9 @@ namespace Social_Network.WEB.Controllers
                     var photo = photoService.GetPhoto(id);
                     return File(photo.Image, "jpeg");
                 }
-                catch 
+                catch
                 {
-                    return File(new byte[0], "jpeg");                    
+                    return File(new byte[0], "jpeg");
                 }
             }
         }
@@ -75,9 +78,9 @@ namespace Social_Network.WEB.Controllers
                     var photo = postsService.GetPost(id);
                     return File(photo.Image, "jpeg");
                 }
-                catch 
+                catch
                 {
-                    return File(new byte[0], "jpeg");                    
+                    return File(new byte[0], "jpeg");
                 }
             }
         }
@@ -205,8 +208,10 @@ namespace Social_Network.WEB.Controllers
                     PosterFullName = user.Name + " " + user.Surname,
                     Text = item.Text,
                     Date = item.Date,
+                    PosterID = item.Poster_ID,
+                    UserID = item.User_ID,
+                    AuthenticatedID = NetworkAuthentication.AuthenticatedUser.ID,
                     URL = user.URL,
-                    Authenticated_URL = NetworkAuthentication.AuthenticatedUser.URL,
                     Likes = postsService.GetPostLikes(item.ID).Count()
                 }
                 );
@@ -230,7 +235,18 @@ namespace Social_Network.WEB.Controllers
         {
             if (id != null)
             {
-                postsService.DeletePost(id);
+                try
+                {
+                    var post = postsService.GetPost(id);
+                    if (post.Poster_ID == NetworkAuthentication.AuthenticatedUser.ID || post.User_ID == NetworkAuthentication.AuthenticatedUser.ID)
+                    {
+                        postsService.DeletePost(id);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    logger.Log(LogLevel.Error, ex.Message);
+                }
             }
             return new EmptyResult();
         }

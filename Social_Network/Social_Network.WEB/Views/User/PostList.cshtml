@@ -7,7 +7,7 @@
     <div class="col-md-10">
         <div>
             @Html.ActionLink(item.PosterFullName, "MainPage", "User", new { id = item.URL }, null)
-            @if (item.Authenticated_URL == item.URL)
+            @if (item.AuthenticatedID == item.PosterID || item.AuthenticatedID == item.UserID)
             {
                 <div class="glyphicon glyphicon-remove pull-right btn" onclick="RemovePost('#postsID',@item.UserID,@item.ID)">
                 </div>
@@ -26,7 +26,7 @@
             <div class="btn" id="@likeid" onclick="LikePost(@likeid,@item.ID)" onmouseover="ShowUserLikes('#@userlikes', @item.ID)">
                 ♥ @item.Likes
             </div>
-            <div id="@userlikes" class="panel panel-default"></div>
+            <div id=@userlikes class="panel panel-default"></div>
         </div>
 
     </div>
