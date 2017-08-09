@@ -1,10 +1,10 @@
 ﻿@model List<Social_Network.WEB.Models.PostListItemViewModel>
-
+@using System.Globalization;
 @foreach (var item in Model)
 {
     string likeid = "likeid" + item.ID;
     string userlikes = "userlikesID" + item.ID;
-    <div class="col-md-10">
+    <div class="col-md-12 panel panel-primary post-padding">
         <div>
             @Html.ActionLink(item.PosterFullName, "MainPage", "User", new { id = item.URL }, null)
             @if (item.AuthenticatedID == item.PosterID || item.AuthenticatedID == item.UserID)
@@ -13,12 +13,14 @@
                 </div>
             }
         </div>
-        <div>
-            @item.Date
+        <div class="date-text">
+            @(item.Date.ToString("dd MMMM yyyy", CultureInfo.InvariantCulture) + ", " + item.Date.ToString("HH:MM:ss"))
         </div>
-        <div class="">
+        <br />
+        <div>
             @item.Text
         </div>
+        <br />
         <div>
             <img class="img-responsive" src="/User/PostImage/@((item.ID == null) ? "" : "" + item.ID)" alt="hui" />
         </div>
@@ -26,7 +28,7 @@
             <div class="btn" id="@likeid" onclick="LikePost(@likeid,@item.ID)" onmouseover="ShowUserLikes('#@userlikes', @item.ID)">
                 ♥ @item.Likes
             </div>
-            <div id=@userlikes class="panel panel-default"></div>
+            <div id=@userlikes></div>
         </div>
 
     </div>

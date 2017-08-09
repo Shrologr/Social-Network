@@ -1,0 +1,56 @@
+﻿.btn a {
+    color: white;
+    text-decoration: none;
+}
+
+.input-append .btn.dropdown-toggle {
+    float: none;
+}
+
+#maindiv {
+    margin-top: 120px;
+}
+
+.urldiv {
+    margin-top: 6px;
+}
+
+.togglediv {
+    margin-top: 14px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.custom-file-upload-post {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.likes-position {
+    position: absolute;
+    z-index: 3;
+    border: 2px solid #ccc;
+    background-color: white;
+}
+
+.date-text {
+    color:#bac9cb;
+}
+
+.post-padding {
+    padding:9px;
+}
+
+.likes-padding {
+    padding:10px;
+}

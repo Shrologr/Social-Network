@@ -11,6 +11,7 @@ using Social_Network.BLL.Interfaces;
 using Social_Network.WEB.Filters;
 using System.IO;
 using NLog;
+using System.Web.UI;
 
 namespace Social_Network.WEB.Controllers
 {
@@ -20,7 +21,7 @@ namespace Social_Network.WEB.Controllers
         public IUserService userService;
         private IUserPhotoService photoService;
         private IPostsService postsService;
-        Logger logger;
+        ILogger logger;
         public UserController(IUserService service, IUserPhotoService otherService, IPostsService postsServiceParam)
         {
             userService = service;
@@ -49,6 +50,7 @@ namespace Social_Network.WEB.Controllers
             userInfo.AuthenticatedURL = NetworkAuthentication.AuthenticatedUser.URL;
             return View(userInfo);
         }
+        [OutputCache(Duration=50, Location= OutputCacheLocation.Server, VaryByParam="id")]
         public ActionResult Image(int? id)
         {
             if (id == null)
@@ -66,7 +68,7 @@ namespace Social_Network.WEB.Controllers
                 }
             }
         }
-
+        [OutputCache(Duration = 50, Location = OutputCacheLocation.Server, VaryByParam = "id")]
         public ActionResult PostImage(int? id)
         {
             if (id == null)

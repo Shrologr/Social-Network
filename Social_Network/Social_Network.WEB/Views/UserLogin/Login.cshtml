@@ -26,7 +26,7 @@
         @using (Html.BeginForm("Login", "UserLogin", FormMethod.Post, new { @class = "container" }))
         {
             <div>
-                <h2>Log in, for fuck's sake, nigga...</h2>
+                <h2>Log in, for God's sake...</h2>
             </div>
             @Html.ValidationSummary()
             <div class="input-group">
@@ -38,10 +38,10 @@
                 @Html.PasswordFor(s => s.User_Password, new { @class = "form-control" })
             </div>
             <div>
-                <input type="submit" value="Log this nigga in" class="btn btn-success" />
+                <input type="submit" value="Log in" class="btn btn-success" />
             </div>
             <div class="btn btn-success">
-                @Html.ActionLink("Register a new nigga", "Register")
+                @Html.ActionLink("Register a new user", "Register")
             </div>
         }
             

@@ -1,5 +1,5 @@
 ﻿@model Social_Network.WEB.Models.UserInfoViewModel
-
+@using System.Globalization;
 @{
     Layout = null;
 }
@@ -9,47 +9,19 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>MainPage</title>
+    <title>@(Model.Name + " " + Model.Surname)</title>
     <script src="@Url.Content("~/Scripts/jquery-3.1.1.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/NetworkFunctions.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.js")" type="text/javascript"></script>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
-    <style>
-        .btn a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .input-append .btn.dropdown-toggle {
-            float: none;
-        }
-
-        #maindiv {
-            margin-top: 120px;
-        }
-
-        .urldiv {
-            margin-top: 6px;
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-
-        .custom-file-upload {
-            border: 1px solid #ccc;
-            display: inline-block;
-            padding: 6px 12px;
-            cursor: pointer;
-        }
-    </style>
+    <link href="~/Content/PersonalStyles.css" rel="stylesheet" />
 </head>
-<body onload="SetIntervalOnLoad('#postsID', ''+@Model.ID)">
+<body onload="SetIntervalOnLoad('#postsID', ''+@Model.ID)" class="col-md-12">
     <div class="navbar navbar-inverse navbar-fixed-top col-md-8 col-md-offset-2">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle togglediv" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -58,7 +30,7 @@
                     @Model.AuthenticatedURL
                 </div>
                 <div class="input-group navbar-brand col-md-8">
-                    <input id="searchTextID" placeholder="Niggas for search..." type="text" class="form-control" aria-label="..." onchange="UsersAjaxCall('#usersList', '#searchTextID')">
+                    <input id="searchTextID" placeholder="Type to search..." type="text" class="form-control" aria-label="..." onchange="UsersAjaxCall('#usersList', '#searchTextID')">
                     <div class="input-group-btn">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <b class="caret"></b>
@@ -70,55 +42,55 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        @Html.ActionLink("View the page of this nigga!", "MainPage", "User", new { id = @Model.AuthenticatedURL }, null)
+                        @Html.ActionLink("View your page", "MainPage", "User", new { id = @Model.AuthenticatedURL }, null)
                     </li>
                     <li>
-                        @Html.ActionLink("Update the data on this nigga!", "Edit", "User")
+                        @Html.ActionLink("Update your info", "Edit", "User")
                     </li>
                     <li>
-                        @Html.ActionLink("Log the shit out of this nigga!", "Logout", "UserLogin")
+                        @Html.ActionLink("Logout", "Logout", "UserLogin")
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-    <div id="maindiv" class="row">
-        <div class="panel-body col-md-4 col-md-offset-2">
+    <div id="maindiv" class="row col-md-12">
+        <div class="col-md-4 col-md-offset-2">
             <div class="text-center panel-heading">
-                <h1>This nigga's info!</h1>
+                <h1>This @((Model.Gender == "Male")?"dude's":"gal's") info!</h1>
             </div>
             <div class="text-left">
                 <div class="form-group">
-                    <label>Name</label>
-                    @Html.DisplayFor(x => x.Name)
+                    <label>Name:</label>
+                    <div class="pull-right">@Model.Name</div>
                 </div>
                 <div class="form-group">
-                    <label>Surname</label>
-                    @Html.DisplayFor(x => x.Surname)
+                    <label>Surname:</label>
+                    <div class="pull-right">@Model.Surname</div>
 
                 </div>
                 @if (Model.Show_birthday)
                 {
                     <div class="form-group">
-                        <label>Birthday</label>
-                        @Html.DisplayFor(x => x.Birthday)
+                        <label>Birthday:</label>
+                        <div class="pull-right">@(Model.Birthday.ToString("dd MMMM yyyy", CultureInfo.InvariantCulture))</div>
                     </div>
                 }
                 <div class="form-group">
-                    <label>Gender</label>
-                    @Html.DisplayFor(x => x.Gender)
+                    <label>Gender:</label>
+                    <div class="pull-right">@Model.Gender</div>
                 </div>
                 <div class="form-group">
-                    <label>Email</label>
-                    @Html.DisplayFor(x => x.Mail)
+                    <label>Email:</label>
+                    <div class="pull-right">@Model.Mail</div>
                 </div>
                 <div class="form-group">
-                    <label>URL</label>
-                    @Html.DisplayFor(x => x.URL)
+                    <label>URL:</label>
+                    <div class="pull-right">@Model.URL</div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-6 col-md-4">
             <img class="img-responsive" src="/User/Image/@((Model.Photo_ID == null)?"":""+Model.Photo_ID)" alt="hui" />
             @if (Model.URL == Model.AuthenticatedURL)
             {
@@ -126,11 +98,11 @@
                 {
                     <div class="text-center form-group">
                         <label class="form-control custom-file-upload">
-                            Get a picture for this nigga!
+                            Get a picture!
                             <input id="ImageFile" name="ImageFile" type="file" accept="image/jpeg image/png image/jpg" />
                         </label>
                         <div>
-                            <input type="submit" value="Save the picture of this nigga!" class="btn btn-default" />
+                            <input type="submit" value="Save the picture!" class="btn btn-default" />
                         </div>
                     </div>
                 }
@@ -138,17 +110,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-offset-4 col-md-4">
-            <h4>Create a new post, nigga!</h4>
+        <div class="col-md-offset-4 col-md-4 col-sm-4">
+            <h4>Create a new post!</h4>
             <div>
-                <textarea placeholder="Enter the text for the nigga's post" id="newPostText" name="newPostText" rows="6"></textarea>
+                <textarea placeholder="Type the message here..." class="col-md-12 col-sm-12 col-xs-12" id="newPostText" name="newPostText" rows="6"></textarea>
             </div>
-            <label class="custom-file-upload btn btn-default">
+            <label class="custom-file-upload-post glyphicon glyphicon-picture">
                 <input id="newPostImage" name="newPostImage" type="file" accept="image/jpeg image/png image/jpg" />
-                Get a fucking image for the post!
             </label>
-            <div class="btn btn-default" onclick="CreatePostAjaxCall('#postsID', ''+@Model.ID, '#newPostText', '#newPostImage')">
-                Submit the post for the nigga!
+            <div class="btn glyphicon glyphicon-send pull-right" onclick="CreatePostAjaxCall('#postsID', ''+@Model.ID, '#newPostText', '#newPostImage')">
             </div>
             <div id="postsID">
 

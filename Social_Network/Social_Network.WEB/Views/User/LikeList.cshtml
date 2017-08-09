@@ -1,8 +1,8 @@
 ﻿@model List<Social_Network.WEB.Models.UserListItemViewModel>
 @if (Model.Any())
 {
-    <div>
-        <h4>Niggas that liked this motherfucker!</h4>
+    <div class="likes-position likes-padding">
+        <h4>People that likes this: </h4>
         @for (int i = 0; i < Model.Count; i++)
         {
             <div>@Html.ActionLink(Model[i].Name + " " + Model[i].Surname, "MainPage", "User", new { id = Model[i].URL }, null)</div>
