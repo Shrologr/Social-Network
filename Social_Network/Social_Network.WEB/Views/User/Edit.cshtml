@@ -18,11 +18,10 @@
     @using (Html.BeginForm())
     {
         <div class="form-horizontal">
-            <h4>Edit the info on nigga by the nickname of @Model.URL!</h4>
+            <h4>Edit the info on @Model.URL!</h4>
             <hr />
-            @Html.ValidationSummary()
             @Html.HiddenFor(model => model.ID)
-            @Html.HiddenFor(model=>model.Photo_ID)
+            @Html.HiddenFor(model => model.Photo_ID)
             <div class="form-group">
                 @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -50,7 +49,10 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Show_birthday, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Show_birthday)
+                    @Html.DropDownListFor(x => x.Show_birthday, new[] {
+                new SelectListItem() { Text = "Yes", Value="true"},
+                new SelectListItem() { Text = "No", Value="false"}
+            })
                     @Html.ValidationMessageFor(model => model.Show_birthday)
                 </div>
             </div>

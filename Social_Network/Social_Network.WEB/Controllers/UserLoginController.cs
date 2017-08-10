@@ -33,7 +33,7 @@ namespace Social_Network.WEB.Controllers
                 user.UserGUID = sessionGuid;
                 userService.UpdateUser(user);
                 HttpContext.Response.Cookies["SocialNetworkID"].Value = sessionGuid.ToString();
-                NetworkAuthentication.AuthenticatedUser = user;
+                //NetworkAuthentication.AuthenticatedUser = user;
                 NetworkAuthentication.AuthenticatedUsersIDs.Add(sessionGuid, user.ID);
                 return RedirectToAction("MainPage", "User");
             }

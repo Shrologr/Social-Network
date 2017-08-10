@@ -18,6 +18,22 @@ namespace Social_Network.WEB.Controllers
     [NetworkAuthentication]
     public class UserController : Controller
     {
+        private NetworkUsersDTO AuthenticatedUser 
+        { 
+            get 
+            {
+                if (_authenticatedUser == null) 
+                {
+                    _authenticatedUser = userService.GetUser(Guid.Parse(HttpContext.Request.Cookies["SocialNetworkID"].Value));
+                }
+                return _authenticatedUser;
+            }
+            set 
+            {
+                _authenticatedUser = value;
+            }
+        }
+        private NetworkUsersDTO _authenticatedUser;
         public IUserService userService;
         private IUserPhotoService photoService;
         private IPostsService postsService;
@@ -29,6 +45,8 @@ namespace Social_Network.WEB.Controllers
             postsService = postsServiceParam;
             logger = LogManager.GetCurrentClassLogger();
         }
+
+
         public ActionResult MainPage(string id)
         {
             NetworkUsersDTO urlUser = null;
@@ -46,8 +64,8 @@ namespace Social_Network.WEB.Controllers
             UserInfoViewModel userInfo;
             var config = new MapperConfiguration(cfg => cfg.CreateMap<NetworkUsersDTO, UserInfoViewModel>());
             var mapper = config.CreateMapper();
-            userInfo = mapper.Map<NetworkUsersDTO, UserInfoViewModel>((urlUser != null) ? urlUser : NetworkAuthentication.AuthenticatedUser);
-            userInfo.AuthenticatedURL = NetworkAuthentication.AuthenticatedUser.URL;
+            userInfo = mapper.Map<NetworkUsersDTO, UserInfoViewModel>((urlUser != null) ? urlUser : AuthenticatedUser);
+            userInfo.AuthenticatedURL = AuthenticatedUser.URL;
             return View(userInfo);
         }
         [OutputCache(Duration=50, Location= OutputCacheLocation.Server, VaryByParam="id")]
@@ -92,8 +110,8 @@ namespace Social_Network.WEB.Controllers
             UserInfoViewModel userInfo;
             var config = new MapperConfiguration(cfg => cfg.CreateMap<NetworkUsersDTO, UserInfoViewModel>());
             var mapper = config.CreateMapper();
-            userInfo = mapper.Map<NetworkUsersDTO, UserInfoViewModel>(NetworkAuthentication.AuthenticatedUser);
-            userInfo.AuthenticatedURL = NetworkAuthentication.AuthenticatedUser.URL;
+            userInfo = mapper.Map<NetworkUsersDTO, UserInfoViewModel>(AuthenticatedUser);
+            userInfo.AuthenticatedURL = AuthenticatedUser.URL;
             if (ImageFile == null)
                 return View(userInfo);
             else
@@ -106,9 +124,9 @@ namespace Social_Network.WEB.Controllers
                         Image = image
                     };
                     photoService.CreatePhoto(newPhoto);
-                    NetworkAuthentication.AuthenticatedUser.Photo_ID = photoService.GetAllPhotos().Last().ID;
-                    userService.UpdateUser(NetworkAuthentication.AuthenticatedUser);
-                    userInfo.Photo_ID = NetworkAuthentication.AuthenticatedUser.Photo_ID;
+                    AuthenticatedUser.Photo_ID = photoService.GetAllPhotos().Last().ID;
+                    userService.UpdateUser(AuthenticatedUser);
+                    userInfo.Photo_ID = AuthenticatedUser.Photo_ID;
                     return View(userInfo);
                 }
                 var photo = photoService.GetPhoto(userInfo.Photo_ID);
@@ -122,7 +140,7 @@ namespace Social_Network.WEB.Controllers
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<NetworkUsersDTO, EditViewModel>());
             var mapper = config.CreateMapper();
-            var model = mapper.Map<NetworkUsersDTO, EditViewModel>(NetworkAuthentication.AuthenticatedUser);
+            var model = mapper.Map<NetworkUsersDTO, EditViewModel>(AuthenticatedUser);
             return View(model);
         }
         private byte[] StreamToByteArray(Stream stream)
@@ -141,28 +159,30 @@ namespace Social_Network.WEB.Controllers
             {
                 try
                 {
-                    if (userService.GetAllUsers().Where(s => (s.Mail != NetworkAuthentication.AuthenticatedUser.Mail && s.Mail == model.Mail) || (s.URL != NetworkAuthentication.AuthenticatedUser.URL && s.URL == model.URL)).Any())
+                    if (userService.GetAllUsers().Where(s => (s.Mail != AuthenticatedUser.Mail && s.Mail == model.Mail) || (s.URL != AuthenticatedUser.URL && s.URL == model.URL)).Any())
                     {
                         return View(model);
                     }
                     var config = new MapperConfiguration(cfg => cfg.CreateMap<EditViewModel, NetworkUsersDTO>());
                     var mapper = config.CreateMapper();
                     var user = mapper.Map<EditViewModel, NetworkUsersDTO>(model);
-                    user.UserGUID = NetworkAuthentication.AuthenticatedUser.UserGUID;
+                    user.UserGUID = AuthenticatedUser.UserGUID;
                     userService.UpdateUser(user);
-                    NetworkAuthentication.AuthenticatedUser = userService.GetUser(user.ID);
+                    AuthenticatedUser = userService.GetUser(user.ID);
+                    return RedirectToAction("MainPage", "User");
                 }
                 catch
                 {
                     return View(model);
                 }
             }
-            return RedirectToAction("MainPage", "User");
+            return View(model);
+
         }
         [HttpPost]
         public ActionResult UserList(string text)
         {
-            var users = userService.GetAllUsers().Where(s => s.URL != NetworkAuthentication.AuthenticatedUser.URL && (s.Name + " " + s.Surname).ToUpper().Contains(text.ToUpper()));
+            var users = userService.GetAllUsers().Where(s => s.URL != AuthenticatedUser.URL && (s.Name + " " + s.Surname).ToUpper().Contains(text.ToUpper()));
             List<UserListItemViewModel> userList = new List<UserListItemViewModel>();
             foreach (var item in users)
             {
@@ -181,15 +201,22 @@ namespace Social_Network.WEB.Controllers
         {
             if (id != null)
             {
-                var post = new PostsDTO()
+                try
                 {
-                    Date = DateTime.Now,
-                    Image = (image != null) ? StreamToByteArray(image.InputStream) : null,
-                    Poster_ID = NetworkAuthentication.AuthenticatedUser.ID,
-                    User_ID = id.Value,
-                    Text = text
-                };
-                postsService.CreatePost(post);
+                    var post = new PostsDTO()
+                    {
+                        Date = DateTime.Now,
+                        Image = (image != null) ? StreamToByteArray(image.InputStream) : null,
+                        Poster_ID = AuthenticatedUser.ID,
+                        User_ID = id.Value,
+                        Text = text
+                    };
+                    postsService.CreatePost(post);
+                }
+                catch 
+                { 
+                    
+                }
             }
             return Json(new { result = "Something" });
         }
@@ -212,7 +239,7 @@ namespace Social_Network.WEB.Controllers
                     Date = item.Date,
                     PosterID = item.Poster_ID,
                     UserID = item.User_ID,
-                    AuthenticatedID = NetworkAuthentication.AuthenticatedUser.ID,
+                    AuthenticatedID = AuthenticatedUser.ID,
                     URL = user.URL,
                     Likes = postsService.GetPostLikes(item.ID).Count()
                 }
@@ -226,7 +253,7 @@ namespace Social_Network.WEB.Controllers
         {
             if (id != null)
             {
-                postsService.ChangePostLike(NetworkAuthentication.AuthenticatedUser.ID, id);
+                postsService.ChangePostLike(AuthenticatedUser.ID, id);
                 return Json(new { likes = postsService.GetPostLikes(id).Count() });
             }
             return Json(new { likes = 0 });
@@ -240,7 +267,7 @@ namespace Social_Network.WEB.Controllers
                 try
                 {
                     var post = postsService.GetPost(id);
-                    if (post.Poster_ID == NetworkAuthentication.AuthenticatedUser.ID || post.User_ID == NetworkAuthentication.AuthenticatedUser.ID)
+                    if (post.Poster_ID == AuthenticatedUser.ID || post.User_ID == AuthenticatedUser.ID)
                     {
                         postsService.DeletePost(id);
                     }

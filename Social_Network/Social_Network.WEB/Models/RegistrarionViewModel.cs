@@ -23,6 +23,7 @@ namespace Social_Network.WEB.Models
         [EmailAddress]
         public string Mail { get; set; }
         [Required]
+        [RegularExpression(@"^(\d|[a-z]|[A-Z])*$", ErrorMessage = "Wrong format for URL. Text and numbers only")]
         [StringLength(35, MinimumLength = 5, ErrorMessage = "URL must be between 5 and 35 symbols")]
         public string URL { get; set; }
         [Required]

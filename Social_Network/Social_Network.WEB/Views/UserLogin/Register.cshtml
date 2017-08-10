@@ -34,13 +34,16 @@
 
             </div>
             <div class="form-group">
-                <label>Your Birthday</label>
+                <label>Your Birthday (year-month-day)</label>
                 @Html.TextBoxFor(x => x.Birthday, new { @class = "control-label col-md-4" })
 
             </div>
             <div class="form-group">
                 <label>Show your birthday?</label>
-                @Html.TextBoxFor(x => x.Show_birthday, new { @class = "control-label col-md-4" })
+                @Html.DropDownListFor(x => x.Show_birthday, new[] {
+                 new SelectListItem() { Text = "Yes", Value="true"},
+                new SelectListItem() { Text = "No", Value="false"}
+            }, new { @class = "control-label col-md-4" })
             </div>
             <div class="form-group">
                 <label>Your gender</label>

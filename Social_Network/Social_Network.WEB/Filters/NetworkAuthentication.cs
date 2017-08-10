@@ -11,7 +11,7 @@ namespace Social_Network.WEB.Filters
     public class NetworkAuthentication : FilterAttribute, IAuthenticationFilter
     {
         public static Dictionary<Guid, int> AuthenticatedUsersIDs = new Dictionary<Guid, int>();
-        public static NetworkUsersDTO AuthenticatedUser { get; set; }
+        //public static NetworkUsersDTO AuthenticatedUser { get; set; }
         public void OnAuthentication(AuthenticationContext filterContext)
         {
             var authenticatedStatus = filterContext.HttpContext.Request.Cookies["SocialNetworkID"];
