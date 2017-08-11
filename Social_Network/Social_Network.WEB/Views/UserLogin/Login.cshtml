@@ -12,39 +12,32 @@
     <title>Login</title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/loginStyles.css" rel="stylesheet" />
     <script src="@Url.Content("~/Scripts/jquery-3.1.1.js")" type="text/javascript"></script>
-    <style>
-        .btn a {
-            color: white;
-            text-decoration: none;
-        }
-    </style>
 </head>
 <body>
-    <div class="center-block">
-
-        @using (Html.BeginForm("Login", "UserLogin", FormMethod.Post, new { @class = "container" }))
-        {
-            <div>
-                <h2>Log in, for God's sake...</h2>
+    @using (Html.BeginForm("Login", "UserLogin", FormMethod.Post, new { @class = "container" }))
+    {
+        <div class="col-md-offset-5 col-md-4 col-sm-offset-4 col-sm-4 col-xs-12">
+            <div class="form-login">
+                <h4>Log in, for God's sake...</h4>
+                <div class="text-danger">
+                    @Html.ValidationSummary()
+                </div>
+                @Html.TextBoxFor(s => s.Mail, new { @class = "form-control input-sm chat-input", placeholder = "username" })
+                <br />
+                @Html.PasswordFor(s => s.User_Password, new { @class = "form-control input-sm chat-input", placeholder = "password" })
+                <br />
+                <div class="wrapper">
+                    <span class="group-btn">
+                        <input type="submit" class="btn btn-primary btn-md" value="Login" />
+                    </span>
+                    <span class="group-btn">
+                        <a href="/UserLogin/Register" class="btn btn-primary btn-md">Register</a>
+                    </span>
+                </div>
             </div>
-            @Html.ValidationSummary()
-            <div class="input-group">
-                <label>Email</label>
-                @Html.TextBoxFor(s => s.Mail, new { @class = "form-control" })
-            </div>
-            <div class="input-group">
-                <label>Password</label>
-                @Html.PasswordFor(s => s.User_Password, new { @class = "form-control" })
-            </div>
-            <div>
-                <input type="submit" value="Log in" class="btn btn-success" />
-            </div>
-            <div class="btn btn-success">
-                @Html.ActionLink("Register a new user", "Register")
-            </div>
-        }
-            
-    </div>
+        </div>
+    }
 </body>
 </html>

@@ -12,66 +12,126 @@
     <title>Registration</title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/registerStyles.css" rel="stylesheet" />
     <script src="@Url.Content("~/Scripts/jquery-3.1.1.js")" type="text/javascript"></script>
 </head>
 <body>
-    <div>
-        <h1>Please, fill your personal info...</h1>
-
-    </div>
-    @using (Html.BeginForm())
-    {
-        <div>
-
-            @Html.ValidationSummary()
-            <div class="form-group">
-                <label>Your Name</label>
-                @Html.TextBoxFor(x => x.Name, new { @class = "control-label col-md-4" })
-            </div>
-            <div class="form-group">
-                <label>Your Surname</label>
-                @Html.TextBoxFor(x => x.Surname, new { @class = "control-label col-md-4" })
-
-            </div>
-            <div class="form-group">
-                <label>Your Birthday (year-month-day)</label>
-                @Html.TextBoxFor(x => x.Birthday, new { @class = "control-label col-md-4" })
-
-            </div>
-            <div class="form-group">
-                <label>Show your birthday?</label>
-                @Html.DropDownListFor(x => x.Show_birthday, new[] {
-                 new SelectListItem() { Text = "Yes", Value="true"},
-                new SelectListItem() { Text = "No", Value="false"}
-            }, new { @class = "control-label col-md-4" })
-            </div>
-            <div class="form-group">
-                <label>Your gender</label>
-                @Html.DropDownListFor(x => x.Gender, new[] {
-                new SelectListItem() { Text = "Male"},
-                new SelectListItem() { Text = "Female"}
-            }, new { @class = "control-label col-md-4" })
-            </div>
-            <div class="form-group">
-                <label>Your Email</label>
-                @Html.TextBoxFor(x => x.Mail, new { @class = "control-label col-md-4" })
-            </div>
-            <div class="form-group">
-                <label>Your URL</label>
-                @Html.TextBoxFor(x => x.URL, new { @class = "control-label col-md-4" })
-            </div>
-            <div class="form-group">
-                <label>Your Password</label>
-                @Html.PasswordFor(x => x.User_Password, new { @class = "control-label col-md-4" })
-            </div>
-            <div class="form-group">
-                <label>Confirm Password</label>
-                @Html.PasswordFor(x => x.PasswordConfirm, new { @class = "control-label col-md-4" })
-            </div>
-            <div>
-                <input type="submit" value="Register" class="btn btn-success" />
+    <div class="row main">
+        <div class="panel-heading">
+            <div class="panel-title text-center">
+                <h1 class="title">Fill the form... Please...</h1>
+                <hr />
+                <div class="text-danger">
+                    @Html.ValidationSummary()
+                </div>
             </div>
         </div>
-    }
+        <div class="main-login main-center">
+            @using (Html.BeginForm("Register", "UserLogin", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+
+                <div class="form-group">
+                    <label class="cols-sm-2 control-label">Your Name</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control", placeholder = "Enter your Name" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="cols-sm-2 control-label">Your Surname</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+                            @Html.TextBoxFor(x => x.Surname, new { @class = "form-control", placeholder = "Enter your Surname" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="cols-sm-2 control-label">Birthday</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-gift" aria-hidden="true"></i></span>
+                            @Html.TextBoxFor(x => x.Birthday, new { @class = "form-control", placeholder = "Enter your birthday (year-month-day)" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="cols-sm-2 control-label">Show your birthday?</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-gift" aria-hidden="true"></i></span>
+                            @Html.DropDownListFor(x => x.Show_birthday, new[] {
+                            new SelectListItem() { Text = "Yes", Value="true"},
+                            new SelectListItem() { Text = "No", Value="false"}
+                            }, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="cols-sm-2 control-label">Your sex</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-star" aria-hidden="true"></i></span>
+                            @Html.DropDownListFor(x => x.Gender, new[] {
+                            new SelectListItem() { Text = "Male"},
+                            new SelectListItem() { Text = "Female"}
+                            }, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="cols-sm-2 control-label">Your Email</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
+                            @Html.TextBoxFor(x => x.Mail, new { @class = "form-control", placeholder = "Enter your Email" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="username" class="cols-sm-2 control-label">URL</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+                            @Html.TextBoxFor(x => x.URL, new { @class = "form-control", placeholder = "Only letters and numbers" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="cols-sm-2 control-label">Password</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
+                            @Html.PasswordFor(x => x.User_Password, new { @class = "form-control", placeholder = "Enter your Password" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
+                            @Html.PasswordFor(x => x.PasswordConfirm, new { @class = "form-control", placeholder = "Confirm your Password" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+                </div>
+            }
+
+        </div>
+    </div>
 </body>
 </html>

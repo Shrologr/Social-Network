@@ -33,12 +33,12 @@ namespace Social_Network.WEB.Controllers
                 user.UserGUID = sessionGuid;
                 userService.UpdateUser(user);
                 HttpContext.Response.Cookies["SocialNetworkID"].Value = sessionGuid.ToString();
-                //NetworkAuthentication.AuthenticatedUser = user;
                 NetworkAuthentication.AuthenticatedUsersIDs.Add(sessionGuid, user.ID);
                 return RedirectToAction("MainPage", "User");
             }
             catch
             {
+                ModelState.AddModelError("", "Wrong email or password");
                 return View();
             }
         }
@@ -56,9 +56,15 @@ namespace Social_Network.WEB.Controllers
                     var config = new MapperConfiguration(cfg => cfg.CreateMap<RegistrarionViewModel, NetworkUsersDTO>());
                     var mapper = config.CreateMapper();
                     var newUser = mapper.Map<RegistrarionViewModel, NetworkUsersDTO>(model);
-                    if (userService.GetUser(newUser.Mail, newUser.User_Password) != null || userService.GetUser(newUser.URL) != null) 
+                    if (userService.GetUser(newUser.Mail, newUser.User_Password) != null) 
                     {
+                        ModelState.AddModelError("", "User with this email already exists.");
                         return View();                        
+                    }
+                    if (userService.GetUser(newUser.URL) != null)
+                    {
+                        ModelState.AddModelError("", "User with this url already exists.");
+                        return View();
                     }
                     userService.CreateUser(newUser);
                 }

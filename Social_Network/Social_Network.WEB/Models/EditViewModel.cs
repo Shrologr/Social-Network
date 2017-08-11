@@ -32,7 +32,7 @@ namespace Social_Network.WEB.Models
         [StringLength(50, MinimumLength = 15, ErrorMessage = "Password must be between 15 and 50 symbols")]
         [DataType(DataType.Password)]
         public string User_Password { get; set; }
-        [Required]
+        [Required(ErrorMessage="Please, confirm the password")]
         [Compare("User_Password", ErrorMessage = "Passwords do not match")]
         [DataType(DataType.Password)]
         public string PasswordConfirm { get; set; }

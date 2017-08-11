@@ -161,6 +161,7 @@ namespace Social_Network.WEB.Controllers
                 {
                     if (userService.GetAllUsers().Where(s => (s.Mail != AuthenticatedUser.Mail && s.Mail == model.Mail) || (s.URL != AuthenticatedUser.URL && s.URL == model.URL)).Any())
                     {
+                        ModelState.AddModelError("", "User with this url or email already exists");
                         return View(model);
                     }
                     var config = new MapperConfiguration(cfg => cfg.CreateMap<EditViewModel, NetworkUsersDTO>());
