@@ -17,13 +17,19 @@
             @(item.Date.ToString("MMMM dd, yyyy", CultureInfo.InvariantCulture) + ", " + item.Date.ToString("HH:MM:ss"))
         </div>
         <br />
+        @if (!string.IsNullOrEmpty(item.Text))
+        {
         <div>
             @item.Text
         </div>
+        }
         <br />
+        @if(item.ID != null)
+        {
         <div>
-            <img class="img-responsive" src="/User/PostImage/@((item.ID == null) ? "" : "" + item.ID)" alt="hui" />
+            <img class="img-responsive" src="/User/PostImage/@(item.ID)" onerror="$(this).hide();" alt="hui" />
         </div>
+        }
         <div onmouseleave="HideUserLikes('#@userlikes')">
             <div class="btn" id="@likeid" onclick="LikePost(@likeid,@item.ID)" onmouseover="ShowUserLikes('#@userlikes', @item.ID)">
                 ♥ @item.Likes

@@ -59,7 +59,7 @@ namespace Social_Network.WEB.Controllers
                     if (userService.GetUser(newUser.Mail, newUser.User_Password) != null) 
                     {
                         ModelState.AddModelError("", "User with this email already exists.");
-                        return View();                        
+                        return View();
                     }
                     if (userService.GetUser(newUser.URL) != null)
                     {
