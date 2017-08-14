@@ -1,0 +1,40 @@
+2017-08-14 14:27:37.3524 Info ::1//UserLogin/Login
+2017-08-14 14:38:38.4572 Info GET ::1//UserLogin/Login
+2017-08-14 14:38:48.7288 Info POST ::1//UserLogin/Login
+2017-08-14 14:38:50.8789 Info GET ::1//
+2017-08-14 14:38:51.8330 Info GET ::1//User/Image/22
+2017-08-14 14:38:55.8902 Info GET ::1//User/Edit
+2017-08-14 14:39:20.9406 Info POST ::1//User/Edit
+2017-08-14 14:39:26.8120 Info POST ::1//User/Edit
+2017-08-14 14:39:27.0140 Info GET ::1//
+2017-08-14 14:39:58.6618 Info GET ::1//UserLogin/Logout
+2017-08-14 14:39:58.7508 Info GET ::1//UserLogin/Login
+2017-08-14 14:41:40.8887 Info GET ::1//UserLogin/Login
+2017-08-14 14:42:08.6132 Info POST ::1//UserLogin/Login
+2017-08-14 14:42:14.5356 Info POST ::1//UserLogin/Login
+2017-08-14 14:42:15.1266 Info GET ::1//
+2017-08-14 14:42:15.9017 Info GET ::1//User/Image/22
+2017-08-14 14:42:22.7981 Info POST ::1//User/RemovePost/
+2017-08-14 14:43:48.3289 Info GET ::1//UserLogin/Login
+2017-08-14 14:43:54.9783 Info POST ::1//UserLogin/Login
+2017-08-14 14:43:55.0983 Info GET ::1//
+2017-08-14 14:43:55.2763 Info GET ::1//User/Image/22
+2017-08-14 14:43:58.6135 Info GET ::1//
+2017-08-14 14:44:05.6109 Info GET ::1//UserLogin/Logout
+2017-08-14 14:44:05.6649 Info GET ::1//UserLogin/Login
+2017-08-14 16:37:47.7171 Info GET ::1//UserLogin/Login
+2017-08-14 16:38:00.8569 Info POST ::1//UserLogin/Login
+2017-08-14 16:38:10.1084 Info GET ::1//
+2017-08-14 16:38:11.3065 Info GET ::1//User/Image/22
+2017-08-14 16:38:16.1048 Info GET ::1//UserLogin/Logout
+2017-08-14 16:38:16.1728 Info GET ::1//UserLogin/Login
+2017-08-14 16:38:21.7861 Info POST ::1//UserLogin/Login
+2017-08-14 16:38:21.9501 Error    в Social_Network.WEB.Controllers.UserLoginController.Login(LoginViewModel model) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.WEB\Controllers\UserLoginController.cs:строка 37 Ссылка на объект не указывает на экземпляр объекта.
+2017-08-14 17:09:21.3654 Info GET ::1//UserLogin/Login
+2017-08-14 17:09:55.5264 Info POST ::1//UserLogin/Login
+2017-08-14 17:09:57.0495 Error POST ::1//UserLogin/LoginStackTrace:    в Social_Network.WEB.Controllers.UserLoginController.Login(LoginViewModel model) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.WEB\Controllers\UserLoginController.cs:строка 38Message: Ссылка на объект не указывает на экземпляр объекта.
+2017-08-14 17:10:26.0851 Info POST ::1//UserLogin/Login
+2017-08-14 17:10:26.6862 Info GET ::1//
+2017-08-14 17:10:27.6152 Info GET ::1//User/Image/22
+2017-08-14 17:10:37.1458 Info GET ::1//UserLogin/Logout
+2017-08-14 17:10:37.2628 Info GET ::1//UserLogin/Login

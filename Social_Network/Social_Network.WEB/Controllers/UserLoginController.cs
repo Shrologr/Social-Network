@@ -9,15 +9,20 @@ using Social_Network.BLL.DTO;
 using Social_Network.BLL.Infrastructure;
 using Social_Network.BLL.Interfaces;
 using Social_Network.WEB.Filters;
+using NLog;
+using Social_Network.WEB.Util;
 
 namespace Social_Network.WEB.Controllers
 {
+    [Log]
     public class UserLoginController : Controller
     {
+        ILogger logger;
         IUserService userService;
         public UserLoginController(IUserService service)
         {
             userService = service;
+            logger = LogManager.GetCurrentClassLogger();
         }
         public ActionResult Login()
         {
@@ -36,8 +41,9 @@ namespace Social_Network.WEB.Controllers
                 NetworkAuthentication.AuthenticatedUsersIDs.Add(sessionGuid, user.ID);
                 return RedirectToAction("MainPage", "User");
             }
-            catch
+            catch (Exception ex)
             {
+                logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
                 ModelState.AddModelError("", "Wrong email or password");
                 return View();
             }
@@ -56,7 +62,7 @@ namespace Social_Network.WEB.Controllers
                     var config = new MapperConfiguration(cfg => cfg.CreateMap<RegistrarionViewModel, NetworkUsersDTO>());
                     var mapper = config.CreateMapper();
                     var newUser = mapper.Map<RegistrarionViewModel, NetworkUsersDTO>(model);
-                    if (userService.GetUser(newUser.Mail, newUser.User_Password) != null) 
+                    if (userService.GetUser(newUser.Mail, newUser.User_Password) != null)
                     {
                         ModelState.AddModelError("", "User with this email already exists.");
                         return View();
@@ -68,8 +74,9 @@ namespace Social_Network.WEB.Controllers
                     }
                     userService.CreateUser(newUser);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
                     return View();
                 }
                 var loginInfo = new LoginViewModel() { Mail = model.Mail, User_Password = model.User_Password };
@@ -80,8 +87,15 @@ namespace Social_Network.WEB.Controllers
 
         public ActionResult Logout()
         {
-            NetworkAuthentication.AuthenticatedUsersIDs.Remove(Guid.Parse(HttpContext.Request.Cookies["SocialNetworkID"].Value));
-            HttpContext.Response.Cookies["SocialNetworkID"].Expires = DateTime.UtcNow;
+            try
+            {
+                NetworkAuthentication.AuthenticatedUsersIDs.Remove(Guid.Parse(HttpContext.Request.Cookies["SocialNetworkID"].Value));
+                HttpContext.Response.Cookies["SocialNetworkID"].Expires = DateTime.UtcNow;
+            }
+            catch (Exception ex)
+            {
+                logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
+            }
             return RedirectToAction("MainPage", "User");
         }
         protected override void Dispose(bool disposing)

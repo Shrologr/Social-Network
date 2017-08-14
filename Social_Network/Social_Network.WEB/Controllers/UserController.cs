@@ -12,23 +12,24 @@ using Social_Network.WEB.Filters;
 using System.IO;
 using NLog;
 using System.Web.UI;
+using Social_Network.WEB.Util;
 
 namespace Social_Network.WEB.Controllers
 {
     [NetworkAuthentication]
     public class UserController : Controller
     {
-        private NetworkUsersDTO AuthenticatedUser 
-        { 
-            get 
+        private NetworkUsersDTO AuthenticatedUser
+        {
+            get
             {
-                if (_authenticatedUser == null) 
+                if (_authenticatedUser == null)
                 {
                     _authenticatedUser = userService.GetUser(Guid.Parse(HttpContext.Request.Cookies["SocialNetworkID"].Value));
                 }
                 return _authenticatedUser;
             }
-            set 
+            set
             {
                 _authenticatedUser = value;
             }
@@ -46,7 +47,7 @@ namespace Social_Network.WEB.Controllers
             logger = LogManager.GetCurrentClassLogger();
         }
 
-
+        [Log]
         public ActionResult MainPage(string id)
         {
             NetworkUsersDTO urlUser = null;
@@ -56,9 +57,9 @@ namespace Social_Network.WEB.Controllers
                 {
                     urlUser = userService.GetUser(id);
                 }
-                catch
+                catch (Exception ex)
                 {
-
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
                 }
             }
             UserInfoViewModel userInfo;
@@ -68,7 +69,8 @@ namespace Social_Network.WEB.Controllers
             userInfo.AuthenticatedURL = AuthenticatedUser.URL;
             return View(userInfo);
         }
-        [OutputCache(Duration=50, Location= OutputCacheLocation.Server, VaryByParam="id")]
+        [Log]
+        [OutputCache(Duration = 50, Location = OutputCacheLocation.Server, VaryByParam = "id")]
         public ActionResult Image(int? id)
         {
             if (id == null)
@@ -80,8 +82,9 @@ namespace Social_Network.WEB.Controllers
                     var photo = photoService.GetPhoto(id);
                     return File(photo.Image, "jpeg");
                 }
-                catch
+                catch (Exception ex)
                 {
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
                     return File(new byte[0], "jpeg");
                 }
             }
@@ -98,12 +101,14 @@ namespace Social_Network.WEB.Controllers
                     var photo = postsService.GetPost(id);
                     return File(photo.Image, "jpeg");
                 }
-                catch
+                catch (Exception ex)
                 {
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
                     return File(new byte[0], "jpeg");
                 }
             }
         }
+        [Log]
         [HttpPost]
         public ActionResult MainPage(HttpPostedFileBase ImageFile)
         {
@@ -116,26 +121,33 @@ namespace Social_Network.WEB.Controllers
                 return View(userInfo);
             else
             {
-                var image = StreamToByteArray(ImageFile.InputStream);
-                if (userInfo.Photo_ID == null)
+                try
                 {
-                    var newPhoto = new UserPhotosDTO()
+                    var image = StreamToByteArray(ImageFile.InputStream);
+                    if (userInfo.Photo_ID == null)
                     {
-                        Image = image
-                    };
-                    photoService.CreatePhoto(newPhoto);
-                    AuthenticatedUser.Photo_ID = photoService.GetAllPhotos().Last().ID;
-                    userService.UpdateUser(AuthenticatedUser);
-                    userInfo.Photo_ID = AuthenticatedUser.Photo_ID;
-                    return View(userInfo);
+                        var newPhoto = new UserPhotosDTO()
+                        {
+                            Image = image
+                        };
+                        photoService.CreatePhoto(newPhoto);
+                        AuthenticatedUser.Photo_ID = photoService.GetAllPhotos().Last().ID;
+                        userService.UpdateUser(AuthenticatedUser);
+                        userInfo.Photo_ID = AuthenticatedUser.Photo_ID;
+                        return View(userInfo);
+                    }
+                    var photo = photoService.GetPhoto(userInfo.Photo_ID);
+                    photo.Image = image;
+                    photoService.UpdatePhoto(photo);
                 }
-                var photo = photoService.GetPhoto(userInfo.Photo_ID);
-                photo.Image = image;
-                photoService.UpdatePhoto(photo);
+                catch (Exception ex)
+                {
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
+                }
                 return View(userInfo);
             }
         }
-
+        [Log]
         public ActionResult Edit()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<NetworkUsersDTO, EditViewModel>());
@@ -151,7 +163,7 @@ namespace Social_Network.WEB.Controllers
                 return ms.ToArray();
             }
         }
-
+        [Log]
         [HttpPost]
         public ActionResult Edit(EditViewModel model)
         {
@@ -172,8 +184,9 @@ namespace Social_Network.WEB.Controllers
                     AuthenticatedUser = userService.GetUser(user.ID);
                     return RedirectToAction("MainPage", "User");
                 }
-                catch
+                catch (Exception ex)
                 {
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
                     return View(model);
                 }
             }
@@ -183,20 +196,27 @@ namespace Social_Network.WEB.Controllers
         [HttpPost]
         public ActionResult UserList(string text)
         {
-            var users = userService.GetAllUsers().Where(s => s.URL != AuthenticatedUser.URL && (s.Name + " " + s.Surname).ToUpper().Contains(text.ToUpper()));
             List<UserListItemViewModel> userList = new List<UserListItemViewModel>();
-            foreach (var item in users)
+            try
             {
-                userList.Add(new UserListItemViewModel()
+                var users = userService.GetAllUsers().Where(s => s.URL != AuthenticatedUser.URL && (s.Name + " " + s.Surname).ToUpper().Contains(text.ToUpper()));
+                foreach (var item in users)
                 {
-                    URL = item.URL,
-                    Name = item.Name,
-                    Surname = item.Surname
-                });
+                    userList.Add(new UserListItemViewModel()
+                    {
+                        URL = item.URL,
+                        Name = item.Name,
+                        Surname = item.Surname
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
             }
             return PartialView("UserList", userList);
         }
-
+        [Log]
         [HttpPost]
         public ActionResult PostCreate(int? id, string text, HttpPostedFileBase image)
         {
@@ -214,37 +234,41 @@ namespace Social_Network.WEB.Controllers
                     };
                     postsService.CreatePost(post);
                 }
-                catch 
-                { 
-                    
+                catch (Exception ex)
+                {
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
                 }
             }
             return Json(new { result = "Something" });
         }
-
-
-
         [HttpPost]
         public ActionResult PostList(int? id)
         {
-            var posts = postsService.GetUserPosts(id);
             var newPosts = new List<PostListItemViewModel>();
-            foreach (var item in posts)
+            try
             {
-                var user = userService.GetUser(item.Poster_ID);
-                newPosts.Add(new PostListItemViewModel()
+                var posts = postsService.GetUserPosts(id);
+                foreach (var item in posts)
                 {
-                    ID = item.ID,
-                    PosterFullName = user.Name + " " + user.Surname,
-                    Text = item.Text,
-                    Date = item.Date,
-                    PosterID = item.Poster_ID,
-                    UserID = item.User_ID,
-                    AuthenticatedID = AuthenticatedUser.ID,
-                    URL = user.URL,
-                    Likes = postsService.GetPostLikes(item.ID).Count()
+                    var user = userService.GetUser(item.Poster_ID);
+                    newPosts.Add(new PostListItemViewModel()
+                    {
+                        ID = item.ID,
+                        PosterFullName = user.Name + " " + user.Surname,
+                        Text = item.Text,
+                        Date = item.Date,
+                        PosterID = item.Poster_ID,
+                        UserID = item.User_ID,
+                        AuthenticatedID = AuthenticatedUser.ID,
+                        URL = user.URL,
+                        Likes = postsService.GetPostLikes(item.ID).Count()
+                    }
+                    );
                 }
-                );
+            }
+            catch (Exception ex)
+            {
+                logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
             }
             return PartialView("PostList", newPosts);
         }
@@ -254,12 +278,19 @@ namespace Social_Network.WEB.Controllers
         {
             if (id != null)
             {
-                postsService.ChangePostLike(AuthenticatedUser.ID, id);
+                try
+                {
+                    postsService.ChangePostLike(AuthenticatedUser.ID, id);
+                }
+                catch (Exception ex)
+                {
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
+                }
                 return Json(new { likes = postsService.GetPostLikes(id).Count() });
             }
             return Json(new { likes = 0 });
         }
-
+        [Log]
         [HttpPost]
         public ActionResult RemovePost(int? id)
         {
@@ -273,9 +304,9 @@ namespace Social_Network.WEB.Controllers
                         postsService.DeletePost(id);
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    logger.Log(LogLevel.Error, ex.Message);
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
                 }
             }
             return new EmptyResult();
@@ -286,16 +317,23 @@ namespace Social_Network.WEB.Controllers
         {
             if (id != null)
             {
-                var likes = postsService.GetPostLikes(id);
                 List<UserListItemViewModel> userList = new List<UserListItemViewModel>();
-                foreach (var item in likes)
+                try
                 {
-                    userList.Add(new UserListItemViewModel()
+                    var likes = postsService.GetPostLikes(id);
+                    foreach (var item in likes)
                     {
-                        URL = item.URL,
-                        Name = item.Name,
-                        Surname = item.Surname
-                    });
+                        userList.Add(new UserListItemViewModel()
+                        {
+                            URL = item.URL,
+                            Name = item.Name,
+                            Surname = item.Surname
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
                 }
                 return PartialView("LikeList", userList);
             }
