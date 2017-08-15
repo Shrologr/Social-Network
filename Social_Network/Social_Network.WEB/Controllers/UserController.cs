@@ -19,7 +19,7 @@ namespace Social_Network.WEB.Controllers
     [NetworkAuthentication]
     public class UserController : Controller
     {
-        private NetworkUsersDTO AuthenticatedUser
+        public NetworkUsersDTO AuthenticatedUser
         {
             get
             {

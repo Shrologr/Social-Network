@@ -62,3 +62,12 @@
 2017-08-15 15:35:50.4217 Info GET ::1//User/Edit
 2017-08-15 15:35:52.3048 Info GET ::1//UserLogin/Logout
 2017-08-15 15:35:52.3628 Info GET ::1//UserLogin/Login
+2017-08-15 17:39:53.1694 Info GET ::1//UserLogin/Login
+2017-08-15 17:40:00.9688 Info POST ::1//UserLogin/Login
+2017-08-15 17:40:04.1930 Info GET ::1// UserID: 11
+2017-08-15 17:40:05.1661 Info GET ::1//User/Image/22 UserID: 11
+2017-08-15 17:40:13.3315 Info POST ::1//User/PostCreate/ UserID: 11
+2017-08-15 17:41:18.4163 Info  GET ::1//UserLogin/Login
+2017-08-15 17:41:25.5767 Info  POST ::1//UserLogin/Login
+2017-08-15 17:41:27.3718 Info  UserID: 11 GET ::1//
+2017-08-15 17:41:28.1418 Info  UserID: 11 GET ::1//User/Image/22
