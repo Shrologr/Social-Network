@@ -59,7 +59,7 @@ namespace Social_Network.WEB.Controllers
                 }
                 catch (Exception ex)
                 {
-                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext, AuthenticatedUser.ID));
                 }
             }
             UserInfoViewModel userInfo;
@@ -84,7 +84,7 @@ namespace Social_Network.WEB.Controllers
                 }
                 catch (Exception ex)
                 {
-                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext, AuthenticatedUser.ID));
                     return File(new byte[0], "jpeg");
                 }
             }
@@ -103,7 +103,7 @@ namespace Social_Network.WEB.Controllers
                 }
                 catch (Exception ex)
                 {
-                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext, AuthenticatedUser.ID));
                     return File(new byte[0], "jpeg");
                 }
             }
@@ -142,7 +142,7 @@ namespace Social_Network.WEB.Controllers
                 }
                 catch (Exception ex)
                 {
-                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext, AuthenticatedUser.ID));
                 }
                 return View(userInfo);
             }
@@ -186,7 +186,7 @@ namespace Social_Network.WEB.Controllers
                 }
                 catch (Exception ex)
                 {
-                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext, AuthenticatedUser.ID));
                     return View(model);
                 }
             }
@@ -212,7 +212,7 @@ namespace Social_Network.WEB.Controllers
             }
             catch (Exception ex)
             {
-                logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
+                logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext, AuthenticatedUser.ID));
             }
             return PartialView("UserList", userList);
         }
@@ -236,7 +236,7 @@ namespace Social_Network.WEB.Controllers
                 }
                 catch (Exception ex)
                 {
-                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext, AuthenticatedUser.ID));
                 }
             }
             return Json(new { result = "Something" });
@@ -268,7 +268,7 @@ namespace Social_Network.WEB.Controllers
             }
             catch (Exception ex)
             {
-                logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
+                logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext, AuthenticatedUser.ID));
             }
             return PartialView("PostList", newPosts);
         }
@@ -284,7 +284,7 @@ namespace Social_Network.WEB.Controllers
                 }
                 catch (Exception ex)
                 {
-                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext, AuthenticatedUser.ID));
                 }
                 return Json(new { likes = postsService.GetPostLikes(id).Count() });
             }
@@ -306,7 +306,7 @@ namespace Social_Network.WEB.Controllers
                 }
                 catch (Exception ex)
                 {
-                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext, AuthenticatedUser.ID));
                 }
             }
             return new EmptyResult();
@@ -333,7 +333,7 @@ namespace Social_Network.WEB.Controllers
                 }
                 catch (Exception ex)
                 {
-                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext, AuthenticatedUser.ID));
                 }
                 return PartialView("LikeList", userList);
             }

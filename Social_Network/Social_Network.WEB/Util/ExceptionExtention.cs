@@ -7,13 +7,13 @@ namespace Social_Network.WEB.Util
 {
     public static class ExceptionExtention
     {
-        public static string FullWebMessage(this Exception ex, HttpContextBase context) 
+        public static string FullWebMessage(this Exception ex, HttpContextBase context, int? id = null) 
         {
             var request = context.Request;
             string address = request.RawUrl;
             string ip = request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? request.UserHostAddress;
             string method = request.HttpMethod;
-            return method + " " + ip + "/" + address + "StackTrace: " + ex.StackTrace + "Message: " + ex.Message;
+            return method + " " + ip + "/" + address + " User ID: " + id + " StackTrace: " + ex.StackTrace + " Message: " + ex.Message;
         }
     }
 }

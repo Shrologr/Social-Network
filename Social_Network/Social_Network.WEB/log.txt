@@ -38,3 +38,27 @@
 2017-08-14 17:10:27.6152 Info GET ::1//User/Image/22
 2017-08-14 17:10:37.1458 Info GET ::1//UserLogin/Logout
 2017-08-14 17:10:37.2628 Info GET ::1//UserLogin/Login
+2017-08-15 15:32:25.5570 Info GET ::1//UserLogin/Login
+2017-08-15 15:32:34.4565 Info POST ::1//UserLogin/Login
+2017-08-15 15:32:43.1260 Info GET ::1//
+2017-08-15 15:32:44.3700 Info GET ::1//User/Image/22
+2017-08-15 15:32:49.7984 Info GET ::1//User/Edit
+2017-08-15 15:32:52.7345 Info POST ::1//User/Edit
+2017-08-15 15:34:00.6414 Info GET ::1//User/Edit
+2017-08-15 15:34:14.0042 Info GET ::1//User/MainPage/hui332
+2017-08-15 15:34:14.1632 Info GET ::1//User/Image/
+2017-08-15 15:34:17.3344 Info GET ::1//User/MainPage/hui332332
+2017-08-15 15:34:17.5454 Info GET ::1//User/Image/22
+2017-08-15 15:34:27.1299 Info GET ::1//User/MainPage/Shrologr
+2017-08-15 15:34:53.4474 Info GET ::1//UserLogin/Logout
+2017-08-15 15:34:53.5124 Info GET ::1//UserLogin/Login
+2017-08-15 15:34:55.8676 Info POST ::1//UserLogin/Login
+2017-08-15 15:34:56.0326 Error POST ::1//UserLogin/Login User ID:  StackTrace:    в Social_Network.WEB.Controllers.UserLoginController.Login(LoginViewModel model) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.WEB\Controllers\UserLoginController.cs:строка 38 Message: Ссылка на объект не указывает на экземпляр объекта.
+2017-08-15 15:35:21.6220 Info POST ::1//UserLogin/Login
+2017-08-15 15:35:21.7900 Info GET ::1//
+2017-08-15 15:35:21.9801 Info GET ::1//User/Image/22
+2017-08-15 15:35:31.1926 Info GET ::1//User/Edit
+2017-08-15 15:35:40.4491 Info POST ::1//User/Edit
+2017-08-15 15:35:50.4217 Info GET ::1//User/Edit
+2017-08-15 15:35:52.3048 Info GET ::1//UserLogin/Logout
+2017-08-15 15:35:52.3628 Info GET ::1//UserLogin/Login
