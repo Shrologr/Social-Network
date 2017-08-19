@@ -8,10 +8,10 @@ namespace Social_Network.WEB.Models
 {
     public class LoginViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage="Please, enter e-mail")]
+        [EmailAddress(ErrorMessage="Wrong format for e-mail")]
         public string Mail { get; set; }
-        [Required]
+        [Required(ErrorMessage="Please, enter password")]
         [DataType(DataType.Password)]
         public string User_Password { get; set; }
     }

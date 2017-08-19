@@ -71,3 +71,84 @@
 2017-08-15 17:41:25.5767 Info  POST ::1//UserLogin/Login
 2017-08-15 17:41:27.3718 Info  UserID: 11 GET ::1//
 2017-08-15 17:41:28.1418 Info  UserID: 11 GET ::1//User/Image/22
+2017-08-18 14:11:47.2695 Info  GET ::1//UserLogin/Login
+2017-08-19 15:37:48.0956 Info  GET ::1//UserLogin/Login
+2017-08-19 15:38:06.0116 Info  POST ::1//UserLogin/Login
+2017-08-19 15:38:14.8681 Info  POST ::1//UserLogin/Login
+2017-08-19 15:38:21.8595 Info  POST ::1//UserLogin/Login
+2017-08-19 15:38:37.7444 Error POST ::1//UserLogin/Login User ID:  StackTrace:    в System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   в System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   в System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__5()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.<System.Collections.Generic.IEnumerable<T>.GetEnumerator>b__0()
+   в System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   в System.Linq.Enumerable.WhereEnumerableIterator`1.MoveNext()
+   в System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   в System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   в Social_Network.DAL.Implementation.NetworkUsersRepository.Find(Func`2 predicate) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.DAL\Implementation\NetworkUsersRepository.cs:строка 31
+   в Social_Network.BLL.Services.UserService.GetUser(String email, String password) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.BLL\Services\UserService.cs:строка 28
+   в Social_Network.WEB.Controllers.UserLoginController.Login(LoginViewModel model) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.WEB\Controllers\UserLoginController.cs:строка 38 Message: The underlying provider failed on Open.
+2017-08-19 15:38:46.9439 Info  POST ::1//UserLogin/Login
+2017-08-19 15:39:01.7978 Error POST ::1//UserLogin/Login User ID:  StackTrace:    в System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   в System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   в System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__5()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.<System.Collections.Generic.IEnumerable<T>.GetEnumerator>b__0()
+   в System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   в System.Linq.Enumerable.WhereEnumerableIterator`1.MoveNext()
+   в System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   в System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   в Social_Network.DAL.Implementation.NetworkUsersRepository.Find(Func`2 predicate) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.DAL\Implementation\NetworkUsersRepository.cs:строка 31
+   в Social_Network.BLL.Services.UserService.GetUser(String email, String password) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.BLL\Services\UserService.cs:строка 28
+   в Social_Network.WEB.Controllers.UserLoginController.Login(LoginViewModel model) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.WEB\Controllers\UserLoginController.cs:строка 38 Message: The underlying provider failed on Open.
+2017-08-19 15:39:11.2823 Info  POST ::1//UserLogin/Login
+2017-08-19 15:39:11.5433 Error POST ::1//UserLogin/Login User ID:  StackTrace:    в System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   в System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   в System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__5()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.<System.Collections.Generic.IEnumerable<T>.GetEnumerator>b__0()
+   в System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   в System.Linq.Enumerable.WhereEnumerableIterator`1.MoveNext()
+   в System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   в System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   в Social_Network.DAL.Implementation.NetworkUsersRepository.Find(Func`2 predicate) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.DAL\Implementation\NetworkUsersRepository.cs:строка 31
+   в Social_Network.BLL.Services.UserService.GetUser(String email, String password) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.BLL\Services\UserService.cs:строка 28
+   в Social_Network.WEB.Controllers.UserLoginController.Login(LoginViewModel model) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.WEB\Controllers\UserLoginController.cs:строка 38 Message: The underlying provider failed on Open.
+2017-08-19 15:40:05.2674 Info  POST ::1//UserLogin/Login
+2017-08-19 15:40:20.1743 Error POST ::1//UserLogin/Login User ID:  StackTrace:    в System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   в System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   в System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__5()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.<System.Collections.Generic.IEnumerable<T>.GetEnumerator>b__0()
+   в System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   в System.Linq.Enumerable.WhereEnumerableIterator`1.MoveNext()
+   в System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   в System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   в Social_Network.DAL.Implementation.NetworkUsersRepository.Find(Func`2 predicate) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.DAL\Implementation\NetworkUsersRepository.cs:строка 31
+   в Social_Network.BLL.Services.UserService.GetUser(String email, String password) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.BLL\Services\UserService.cs:строка 28
+   в Social_Network.WEB.Controllers.UserLoginController.Login(LoginViewModel model) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.WEB\Controllers\UserLoginController.cs:строка 38 Message: The underlying provider failed on Open.
+2017-08-19 15:41:34.9625 Info  POST ::1//UserLogin/Login
+2017-08-19 15:41:37.5537 Info  UserID: 11 GET ::1//
+2017-08-19 15:41:38.8748 Info  UserID: 11 GET ::1//User/Image/22
+2017-08-19 15:41:45.9182 Info  UserID: 11 POST ::1//User/RemovePost/
+2017-08-19 15:41:49.4544 Info  UserID: 11 GET ::1//User/Edit
+2017-08-19 15:42:07.9434 Info  UserID: 11 POST ::1//User/Edit
+2017-08-19 15:42:14.3888 Info  UserID: 11 POST ::1//User/Edit
+2017-08-19 15:42:28.4976 Info  UserID: 11 POST ::1//User/Edit
+2017-08-19 15:42:43.0214 Info  UserID: 11 POST ::1//User/Edit
+2017-08-19 15:42:57.3683 Info  UserID: 11 POST ::1//User/Edit
+2017-08-19 15:42:57.5503 Info  UserID: 11 GET ::1//
+2017-08-19 15:42:57.7063 Info  UserID: 11 GET ::1//User/Image/22
+2017-08-19 15:43:01.5205 Info  GET ::1//UserLogin/Logout
+2017-08-19 15:43:01.5885 Info  GET ::1//UserLogin/Login
+2017-08-19 15:43:02.8936 Info  GET ::1//UserLogin/Register
+2017-08-19 15:43:16.4954 Info  POST ::1//UserLogin/Register
+2017-08-19 15:43:33.7163 Info  GET ::1//UserLogin/Register

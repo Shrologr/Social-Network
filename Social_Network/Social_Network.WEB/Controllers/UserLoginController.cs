@@ -31,22 +31,26 @@ namespace Social_Network.WEB.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                var user = userService.GetUser(model.Mail, model.User_Password);
-                var sessionGuid = Guid.NewGuid();
-                user.UserGUID = sessionGuid;
-                userService.UpdateUser(user);
-                HttpContext.Response.Cookies["SocialNetworkID"].Value = sessionGuid.ToString();
-                NetworkAuthentication.AuthenticatedUsersIDs.Add(sessionGuid, user.ID);
-                return RedirectToAction("MainPage", "User");
+                try
+                {
+                    var user = userService.GetUser(model.Mail, model.User_Password);
+                    var sessionGuid = Guid.NewGuid();
+                    user.UserGUID = sessionGuid;
+                    userService.UpdateUser(user);
+                    HttpContext.Response.Cookies["SocialNetworkID"].Value = sessionGuid.ToString();
+                    NetworkAuthentication.AuthenticatedUsersIDs.Add(sessionGuid, user.ID);
+                    return RedirectToAction("MainPage", "User");
+                }
+                catch (Exception ex)
+                {
+                    logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
+                    ModelState.AddModelError("", "Wrong email or password");
+                    return View();
+                }
             }
-            catch (Exception ex)
-            {
-                logger.Log(LogLevel.Error, ex.FullWebMessage(HttpContext));
-                ModelState.AddModelError("", "Wrong email or password");
-                return View();
-            }
+            return View();
         }
         public ActionResult Register()
         {
