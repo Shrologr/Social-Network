@@ -70,7 +70,7 @@ namespace Social_Network.WEB.Controllers
             return View(userInfo);
         }
         [Log]
-        [OutputCache(Duration = 50, Location = OutputCacheLocation.Server, VaryByParam = "id")]
+        [OutputCache(Duration = 10, Location = OutputCacheLocation.Server, VaryByParam = "id")]
         public ActionResult Image(int? id)
         {
             if (id == null)

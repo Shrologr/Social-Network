@@ -152,3 +152,20 @@
 2017-08-19 15:43:02.8936 Info  GET ::1//UserLogin/Register
 2017-08-19 15:43:16.4954 Info  POST ::1//UserLogin/Register
 2017-08-19 15:43:33.7163 Info  GET ::1//UserLogin/Register
+2017-08-20 16:13:48.7004 Info  GET ::1//UserLogin/Login
+2017-08-20 16:13:56.1219 Info  GET ::1//UserLogin/Register
+2017-08-20 16:14:04.4583 Info  POST ::1//UserLogin/Register
+2017-08-20 16:14:16.8930 Info  POST ::1//UserLogin/Register
+2017-08-20 16:14:32.6879 Info  GET ::1//UserLogin/Register
+2017-08-20 16:25:28.4705 Info  GET ::1//UserLogin/Login
+2017-08-20 16:25:34.4988 Info  GET ::1//UserLogin/Register
+2017-08-20 16:25:43.2303 Info  POST ::1//UserLogin/Register
+2017-08-20 16:25:59.2062 Info  GET ::1//UserLogin/Register
+2017-08-20 16:36:38.1578 Info  GET ::1//UserLogin/Login
+2017-08-20 16:36:47.6753 Info  POST ::1//UserLogin/Login
+2017-08-20 16:37:13.5038 Info  UserID: 11 GET ::1//
+2017-08-20 16:37:15.7279 Info  UserID: 11 GET ::1//User/Image/22
+2017-08-20 16:37:25.4225 Info  UserID: 11 POST ::1//User/PostCreate/
+2017-08-20 16:37:31.1878 Info  UserID: 11 POST ::1//User/RemovePost/
+2017-08-20 16:37:35.4100 Info  GET ::1//UserLogin/Logout
+2017-08-20 16:37:35.4680 Info  GET ::1//UserLogin/Login

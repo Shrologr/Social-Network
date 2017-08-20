@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Social_Network.WEB.Util;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace Social_Network.WEB.Models
         [DataType(DataType.Password)]
         public string User_Password { get; set; }
         [Required(ErrorMessage = "Confirm the password")]
-        [Compare("User_Password", ErrorMessage = "Passwords do not match")]
+        [CustomCompare("User_Password", "Passwords do not match")]
         [DataType(DataType.Password)]
         public string PasswordConfirm { get; set; }
     }
