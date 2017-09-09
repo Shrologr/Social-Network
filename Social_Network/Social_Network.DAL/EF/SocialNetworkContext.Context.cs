@@ -18,11 +18,7 @@ namespace Social_Network.DAL.EF
         public SocialNetworkDatabaseContext(string connectionString)
             : base(connectionString)
         {
-        }
-    
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            throw new UnintentionalCodeFirstException();
+            Database.Log = a => System.Diagnostics.Trace.WriteLine(a);
         }
     
         public virtual DbSet<NetworkUsers> NetworkUsers { get; set; }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using Social_Network.DAL.EF;
 using Social_Network.DAL.Interfaces;
+using System.Linq.Expressions;
 
 namespace Social_Network.DAL.Implementation
 {
@@ -26,7 +27,7 @@ namespace Social_Network.DAL.Implementation
             return db.Posts.Find(id);
         }
 
-        public IEnumerable<Posts> Find(Func<Posts, bool> predicate)
+        public IEnumerable<Posts> Find(Expression<Func<Posts, bool>> predicate)
         {
             return db.Posts.Where(predicate).ToList();
         }

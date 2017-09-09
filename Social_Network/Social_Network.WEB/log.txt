@@ -169,3 +169,23 @@
 2017-08-20 16:37:31.1878 Info  UserID: 11 POST ::1//User/RemovePost/
 2017-08-20 16:37:35.4100 Info  GET ::1//UserLogin/Logout
 2017-08-20 16:37:35.4680 Info  GET ::1//UserLogin/Login
+2017-09-09 15:06:21.3233 Info  GET ::1//UserLogin/Login
+2017-09-09 15:06:31.4719 Info  POST ::1//UserLogin/Login
+2017-09-09 15:06:36.5842 Info  UserID: 11 GET ::1//
+2017-09-09 15:06:37.7772 Info  UserID: 11 GET ::1//User/Image/22
+2017-09-09 15:09:29.0790 Error POST ::1//User/PostList/ User ID: 11 StackTrace:    в System.Data.Entity.Core.Common.Internal.Materialization.Shaper`1.HandleReaderException(Exception e)
+   в System.Data.Entity.Core.Common.Internal.Materialization.Shaper`1.StoreRead()
+   в System.Data.Entity.Core.Common.Internal.Materialization.Shaper`1.SimpleEnumerator.MoveNext()
+   в System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   в System.Linq.Enumerable.WhereEnumerableIterator`1.MoveNext()
+   в System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   в System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   в Social_Network.DAL.Implementation.PostsRepository.Find(Func`2 predicate) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.DAL\Implementation\PostsRepository.cs:строка 31
+   в Social_Network.BLL.Services.PostsService.GetUserPosts(Nullable`1 id) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.BLL\Services\PostsService.cs:строка 37
+   в Social_Network.WEB.Controllers.UserController.PostList(Nullable`1 id) в c:\Users\Shrologr\Documents\GitHub\Social-Network\Social_Network\Social_Network.WEB\Controllers\UserController.cs:строка 250 Message: An error occurred while reading from the store provider's data reader. See the inner exception for details.
+2017-09-09 15:12:33.2046 Info  GET ::1//UserLogin/Login
+2017-09-09 15:12:57.2759 Info  POST ::1//UserLogin/Login
+2017-09-09 15:13:00.4951 Info  UserID: 11 GET ::1//
+2017-09-09 15:13:01.5632 Info  UserID: 11 GET ::1//User/Image/22
+2017-09-09 15:13:53.1691 Info  GET ::1//UserLogin/Logout
+2017-09-09 15:13:53.2901 Info  GET ::1//UserLogin/Login
